@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public float health = 10f;
     public float speed = 5f;
 
+    //direction variables
     private int DOWN = 1;
     private int UP = 2;
     private int LEFT = 3;
     private int RIGHT = 4;
     private int direction = 1;
 
+    //private component variables
     private Rigidbody2D rb2d;
     private Animator anim;
 
@@ -22,7 +25,16 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
         Move();
+        Attack();
 	}
+
+    private void Attack() {
+        if (Input.GetButtonDown("Fire1")) {
+            Debug.Log("hit fire");
+            anim.SetTrigger("attack");
+        }
+        //anim.ResetTrigger("attack");
+    }
 
     private void Move() {
         //get directional input
