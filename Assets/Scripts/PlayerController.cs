@@ -30,16 +30,14 @@ public class PlayerController : MonoBehaviour {
 
     private void Attack() {
         if (Input.GetButtonDown("Fire1")) {
-            Debug.Log("hit fire");
             anim.SetTrigger("attack");
         }
-        //anim.ResetTrigger("attack");
     }
 
     private void Move() {
         //get directional input
-        float horizontal = Input.GetAxisRaw("Horizontal") * speed;
-        float vertical = Input.GetAxisRaw("Vertical") * speed;
+        float horizontal = Input.GetAxisRaw("Horizontal1") * speed;
+        float vertical = Input.GetAxisRaw("Vertical1") * speed;
 
         //set layer depending on direction
         SetLayer(direction, 0f); //set current layer weight to zero
