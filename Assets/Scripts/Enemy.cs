@@ -22,11 +22,7 @@ public class Enemy : MonoBehaviour {
 
         Vector3 detectDistance = transform.position - player.transform.position;
         Debug.Log(detectDistance);
-        if (Mathf.Abs(detectDistance.x) > 0.62 || Mathf.Abs(detectDistance.y) > 1.4) {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        }
-        else
-            rb2d.velocity = new Vector2(0, 0);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
     void OnCollisionEnter2D(Collision2D other) {
