@@ -447,6 +447,8 @@ MonoBehaviour:
   health: 10
   speed: 5
   attack: 0
+  spriteBlinkingTotalTimer: 0
+  startBlinking: 0
 --- !u!50 &946537528
 Rigidbody2D:
   serializedVersion: 4
@@ -458,7 +460,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 200
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -479,7 +481,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02785778, y: -0.119897366}
+  m_Offset: {x: -0.02785778, y: -0.032457232}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -490,7 +492,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67713034, y: 1.3520952}
+  m_Size: {x: 0.67713034, y: 1.5269755}
   m_EdgeRadius: 0
 --- !u!212 &946537530
 SpriteRenderer:
@@ -900,7 +902,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.94}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &1477903613
 Rigidbody2D:
