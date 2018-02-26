@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     public float health = 10f;
     public float speed = 5f;
 
+    [HideInInspector] public bool attack = false;
+
     //direction variables
     private int DOWN = 1;
     private int UP = 2;
@@ -28,9 +30,16 @@ public class PlayerController : MonoBehaviour {
         Attack();
 	}
 
+    void OnCollisionEnter2D(Collision2D coll) {
+        if (!attack && coll.gameObject.tag == "Enemy")
+            --health;
+    }
+
     private void Attack() {
         if (Input.GetButtonDown("Fire1")) {
+            attack = true;
             anim.SetTrigger("attack");
+            Invoke("DisableAttack", 0.2f);
         }
     }
 
@@ -79,5 +88,9 @@ public class PlayerController : MonoBehaviour {
         else if (direction == LEFT)
             layerName = "Left Layer";
         return layerName;
+    }
+
+    private void DisableAttack() {
+        attack = false;
     }
 }
