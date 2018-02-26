@@ -19,20 +19,35 @@ public class PlayerController : MonoBehaviour {
     //private component variables
     private Rigidbody2D rb2d;
     private Animator anim;
+    private SpriteRenderer spriteRend;
 
-	void Awake () {
+    //variables to enable blinking of sprite
+    private float spriteBlinkingTimer = 0.0f;
+    private float spriteBlinkingMiniDuration = 0.1f;
+    [HideInInspector] public float spriteBlinkingTotalTimer = 0.0f;
+    private float spriteBlinkingTotalDuration = 1.0f;
+    [HideInInspector] public bool startBlinking = false;
+
+    void Awake () {
         rb2d = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
+        spriteRend = GetComponent<SpriteRenderer>();
 	}
 	
 	void Update () {
         Move();
         Attack();
-	}
+
+        if (startBlinking)
+            SpriteBlinkingEffect();
+    }
 
     void OnCollisionEnter2D(Collision2D coll) {
-        if (!attack && coll.gameObject.tag == "Enemy")
-            --health;
+        if (!attack && coll.gameObject.tag == "Enemy") {
+            startBlinking = true; //start blinking effect
+            health -= 1; //decrement health
+            spriteBlinkingTotalTimer = 0f; //reset blinking timer
+        }
     }
 
     private void Attack() {
@@ -88,6 +103,26 @@ public class PlayerController : MonoBehaviour {
         else if (direction == LEFT)
             layerName = "Left Layer";
         return layerName;
+    }
+
+    private void SpriteBlinkingEffect() {
+        //turns on and off sprite renderer to create blinking effect
+        spriteBlinkingTotalTimer += Time.deltaTime;
+        if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration) {
+            startBlinking = false;
+            spriteBlinkingTotalTimer = 0.0f;
+            spriteRend.enabled = true;
+            return;
+        }
+
+        spriteBlinkingTimer += Time.deltaTime;
+        if (spriteBlinkingTimer >= spriteBlinkingMiniDuration) {
+            spriteBlinkingTimer = 0.0f;
+            if (spriteRend.enabled)
+                spriteRend.enabled = false;
+            else
+                spriteRend.enabled = true;
+        }
     }
 
     private void DisableAttack() {
