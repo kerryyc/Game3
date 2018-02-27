@@ -63,6 +63,11 @@ public class Enemy : MonoBehaviour {
                 Invoke("StopForce", 0.2f);
             }
         }
+        if (other.gameObject.tag == "PlayerBoundary")
+        {
+            // if enemy collides with player boundary, ignore collision
+            Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
+        }
     }
 
     private void StopForce() {

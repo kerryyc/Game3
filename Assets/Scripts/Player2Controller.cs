@@ -9,6 +9,7 @@ public class Player2Controller : MonoBehaviour {
 
     [HideInInspector] public bool attack = false;
 
+
     //direction variables
     private int DOWN = 1;
     private int UP = 2;

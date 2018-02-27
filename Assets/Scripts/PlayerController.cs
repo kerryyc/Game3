@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 
     [HideInInspector] public bool attack = false;
 
+
+
     //direction variables
     private int DOWN = 1;
     private int UP = 2;
@@ -28,13 +30,13 @@ public class PlayerController : MonoBehaviour {
     private float spriteBlinkingTotalDuration = 1.0f;
     [HideInInspector] public bool startBlinking = false;
 
-    void Awake () {
+    void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
-	}
-	
-	void Update () {
+    }
+
+    void Update() {
         Move();
         Attack();
 
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour {
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
         }
+        
     }
 
     private void Attack() {
@@ -66,7 +69,11 @@ public class PlayerController : MonoBehaviour {
         //set layer depending on direction
         SetLayer(direction, 0f); //set current layer weight to zero
         if (horizontal > 0)
+        {
             direction = RIGHT;
+
+        }
+         
         else if (horizontal < 0)
             direction = LEFT;
         else if (vertical > 0)
@@ -80,9 +87,10 @@ public class PlayerController : MonoBehaviour {
             anim.SetBool("move", true);
         else
             anim.SetBool("move", false);
-        
+
         //make player move
-        rb2d.velocity = new Vector2(horizontal, vertical);
+    
+        rb2d.velocity = new Vector2(horizontal,vertical);
     }
 
     private void SetLayer(int dir, float weight) {
