@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour {
+    public bool isMenu = false;
     public int levelNum = 1;
     public string sceneName;
     public float surviveTime = 60f;
@@ -16,6 +17,8 @@ public class UIHandler : MonoBehaviour {
     private bool pause = false;
 
     void Update() {
+        if (isMenu) return; //skip if menu script
+
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         //if all players are dead
         if (players.Length == 0) {
