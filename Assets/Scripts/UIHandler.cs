@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour {
     public int levelNum = 1;
     public string sceneName;
+    public float surviveTime = 60f;
     public GameObject canvas;
     public GameObject gameOver;
+    public GameObject winObject;
+    public Text timer;
     private bool pause = false;
 
     void Update() {
-        //if (Time.timeScale == 1) {
-        //    canvas.SetActive(true);
-        //}
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         //if all players are dead
         if (players.Length == 0) {
             Time.timeScale = 0;
             gameOver.SetActive(true);
+        }
+        else
+            Time.timeScale = 1;
+
+        surviveTime -= Time.deltaTime;
+        timer.text = ((int)surviveTime).ToString();
+        Debug.Log(surviveTime);
+        if((int)surviveTime == 0) {
+            Time.timeScale = 0;
+            winObject.SetActive(true);
         }
     }
 

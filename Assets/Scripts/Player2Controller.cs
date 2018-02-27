@@ -9,7 +9,6 @@ public class Player2Controller : MonoBehaviour {
 
     [HideInInspector] public bool attack = false;
 
-
     //direction variables
     private int DOWN = 1;
     private int UP = 2;
@@ -44,6 +43,7 @@ public class Player2Controller : MonoBehaviour {
                 enemy.GetComponent<Enemy>().alivePlayers -= 1;
             //deactive player
             this.gameObject.SetActive(false);
+            return;
         }
 
         Move();

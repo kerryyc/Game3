@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c0e4a3779f88645800d8b5a09b941f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 3
   speed: 2
   knockback: 500
+  alivePlayers: 2
 --- !u!212 &212901321429540124
 SpriteRenderer:
   m_ObjectHideFlags: 1
