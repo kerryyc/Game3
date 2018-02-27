@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
     public float knockback = 250f;
 
     private float damageCoolDown = 1f;
+    private bool doKnockback = false;
     private GameObject player;
     private Rigidbody2D rb2d;
 
@@ -18,26 +19,23 @@ public class Enemy : MonoBehaviour {
     }
 
     void Update() {
+        if(!doKnockback)
+            rb2d.velocity = new Vector2(0, 0);
+
         if (health <= 0)
             Destroy(this.gameObject);
 
         Vector3 detectDistance = transform.position - player.transform.position;
         //Debug.Log(detectDistance);
         //moves toward player until it reaches certain distance
-        if (Mathf.Abs(detectDistance.x) > 1 || Mathf.Abs(detectDistance.y) > 1.4) {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        }
-        else {
-            //otherwise remove all forces from object and begin damaging player
-            rb2d.velocity = new Vector2(0, 0);
-            damagePlayer();
-        }
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
     void OnCollisionEnter2D(Collision2D other) {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player" && player.GetComponent<PlayerController>().attack) {
             --health;
+            doKnockback = true;
             //allow for enemies to get knocked back upon getting hit
             var force = transform.position - other.transform.position;
             force.Normalize();
@@ -55,6 +53,7 @@ public class Enemy : MonoBehaviour {
         var force = transform.position - player.transform.position;
         force.Normalize();
         rb2d.AddForce(-force * knockback);
+        doKnockback = false;
     }
 
     private void damagePlayer() {
