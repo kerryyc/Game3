@@ -33,11 +33,16 @@ public class Enemy : MonoBehaviour {
             Destroy(this.gameObject);
 
         //checks for player that is closest to enemy (might need to be optimized)
-        float[] playerDistance = new float[numPlayers];
+        int minIndex = 0;
+        float minDistance = float.MaxValue;
         for (int i = 0; i < numPlayers; ++i) {
-            playerDistance[i] = Vector2.Distance(allPlayers[i].transform.position, transform.position);
+            float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
+            if (distance < minDistance) {
+                minIndex = i;
+                minDistance = distance;
+            }
         }
-        player = allPlayers[playerDistance.ToList().IndexOf(playerDistance.Min())];
+        player = allPlayers[minIndex];
 
         //moves toward player until it reaches certain distance
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
