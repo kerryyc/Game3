@@ -36,6 +36,16 @@ public class Player2Controller : MonoBehaviour {
     }
 
     void Update() {
+        //when health reaches 0
+        if (health <= 0) {
+            //subtract alive player count
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+                enemy.GetComponent<Enemy>().alivePlayers -= 1;
+            //deactive player
+            this.gameObject.SetActive(false);
+        }
+
         Move();
         Attack();
 

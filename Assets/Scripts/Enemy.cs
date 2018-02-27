@@ -12,14 +12,12 @@ public class Enemy : MonoBehaviour {
     private float damageCoolDown = 1f;
     private bool doKnockback = false;
 
-    private int numPlayers = 2;
+    public int alivePlayers = 2;
     private GameObject[] allPlayers;
     private GameObject player;
     private Rigidbody2D rb2d;
 
     void Awake() {
-        allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        player = GameObject.FindGameObjectWithTag("Player");
         rb2d = GetComponent<Rigidbody2D>();
     }
 
@@ -33,19 +31,22 @@ public class Enemy : MonoBehaviour {
             Destroy(this.gameObject);
 
         //checks for player that is closest to enemy (might need to be optimized)
-        int minIndex = 0;
-        float minDistance = float.MaxValue;
-        for (int i = 0; i < numPlayers; ++i) {
-            float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
-            if (distance < minDistance) {
-                minIndex = i;
-                minDistance = distance;
+        allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        if (alivePlayers > 0) {
+            int minIndex = 0;
+            float minDistance = float.MaxValue;
+            for (int i = 0; i < alivePlayers; ++i) {
+                float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
+                if (distance < minDistance) {
+                    minIndex = i;
+                    minDistance = distance;
+                }
             }
-        }
-        player = allPlayers[minIndex];
+            player = allPlayers[minIndex];
 
-        //moves toward player until it reaches certain distance
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            //moves toward player until it reaches certain distance
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other) {

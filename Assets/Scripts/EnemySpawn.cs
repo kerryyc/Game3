@@ -19,7 +19,9 @@ public class EnemySpawn : MonoBehaviour {
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            Instantiate(enemy, new Vector2(transform.position.x, transform.position.y), transform.rotation);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            GameObject newEnemy = Instantiate(enemy, new Vector2(transform.position.x, transform.position.y), transform.rotation);
+            newEnemy.GetComponent<Enemy>().alivePlayers = players.Length;
             timer = delay;
         }
     }
