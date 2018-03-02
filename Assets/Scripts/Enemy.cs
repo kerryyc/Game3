@@ -11,18 +11,23 @@ public class Enemy : MonoBehaviour {
     public int alivePlayers = 2;
 
     private float damageCoolDown = 1f;
-    private bool doKnockback = false;
+    [HideInInspector] public bool doKnockback = false;
     private bool curDamagePlayer = false;
 
     private float lastDamageTime = 0f;
     public float damagePeriod = 0.5f;
 
+    private float lastKnockTime = 0f;
+    private float knockPeriod = 0.5f;
+
     private GameObject[] allPlayers;
     private GameObject player;
     private Rigidbody2D rb2d;
+    private Animator anim;
 
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update() {
@@ -50,6 +55,7 @@ public class Enemy : MonoBehaviour {
 
             //moves toward player until it reaches certain distance
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            updateAnimations();
         }
     }
 
@@ -69,6 +75,16 @@ public class Enemy : MonoBehaviour {
                 Invoke("StopForce", 0.2f);
             }
         }
+
+        if(other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
+            doKnockback = true;
+            //allow for enemies to get knocked back upon getting hit
+            var force = transform.position - other.transform.position;
+            force.Normalize();
+            rb2d.AddForce(force * knockback);
+            Invoke("StopForce", 0.2f);
+        }
+
         if (other.gameObject.tag == "PlayerBoundary")
         {
             // if enemy collides with player boundary, ignore collision
@@ -93,9 +109,15 @@ public class Enemy : MonoBehaviour {
                 Invoke("StopForce", 0.2f);
             }
         }
-        if (other.gameObject.tag == "PlayerBoundary") {
-            // if enemy collides with player boundary, ignore collision
-            Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
+
+        if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
+            doKnockback = true;
+            //allow for enemies to get knocked back upon getting hit
+            var force = transform.position - other.transform.position;
+            force.Normalize();
+            rb2d.AddForce(force * 50);
+            lastKnockTime = Time.time;
+            Invoke("StopForce", 0.2f);
         }
     }
 
@@ -105,6 +127,18 @@ public class Enemy : MonoBehaviour {
         force.Normalize();
         rb2d.AddForce(-force * knockback);
         doKnockback = false;
-        curDamagePlayer = false;
+    }
+
+    private void updateAnimations() {
+        Vector2 detectDistance = transform.position - player.transform.position;
+        if (detectDistance.y > detectDistance.x && detectDistance.y > 0)
+            anim.Play("skel_run_down");
+        else if (detectDistance.y < detectDistance.x && detectDistance.y < 0)
+            anim.Play("skel_run_up");
+        else if (detectDistance.x > 0)
+            anim.Play("skel_run_left");
+        else if (detectDistance.x < 0)
+            anim.Play("skel_run_right");
+           
     }
 }
