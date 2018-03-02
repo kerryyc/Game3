@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnCollisionStay2D(Collision2D coll) {
-        if(Time.time - lastDamageTime >= damagePeriod && coll.gameObject.tag == "Enemy") {
+        if(!attack && Time.time - lastDamageTime >= damagePeriod && coll.gameObject.tag == "Enemy") {
             startBlinking = true; //start blinking effect
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Fire1")) {
             attack = true;
             anim.SetTrigger("attack");
-            Invoke("DisableAttack", 1f); //allow player invulnerability while attacking, disable in 0.2f
+            Invoke("DisableAttack", 0.2f); //allow player invulnerability while attacking, disable in 0.2f
         }
     }
 
