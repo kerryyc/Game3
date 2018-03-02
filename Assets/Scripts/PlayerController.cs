@@ -87,6 +87,13 @@ public class PlayerController : MonoBehaviour {
         float horizontal = Input.GetAxisRaw("Horizontal1") * speed;
         float vertical = Input.GetAxisRaw("Vertical1") * speed;
 
+        if (horizontal != 0 && Mathf.Abs(horizontal) < 1) {
+            horizontal = 0;
+        }
+        if (vertical != 0 && Mathf.Abs(vertical) < 1) {
+            vertical = 0;
+        }
+
         //set layer depending on direction
         SetLayer(direction, 0f); //set current layer weight to zero
         if (horizontal > 0)
