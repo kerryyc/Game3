@@ -8,11 +8,15 @@ public class Enemy : MonoBehaviour {
     public float health = 1f;
     public float speed = 2f;
     public float knockback = 250f;
+    public int alivePlayers = 2;
 
     private float damageCoolDown = 1f;
     private bool doKnockback = false;
+    private bool curDamagePlayer = false;
 
-    public int alivePlayers = 2;
+    private float lastDamageTime = 0f;
+    public float damagePeriod = 0.5f;
+
     private GameObject[] allPlayers;
     private GameObject player;
     private Rigidbody2D rb2d;
@@ -56,6 +60,7 @@ public class Enemy : MonoBehaviour {
             if ((other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) ||
                 (other.gameObject.GetComponent<Player2Controller>() != null && other.gameObject.GetComponent<Player2Controller>().attack)) {
                 --health;
+                lastDamageTime = Time.time; //update when enemy was last damaged
                 doKnockback = true;
                 //allow for enemies to get knocked back upon getting hit
                 var force = transform.position - other.transform.position;
@@ -71,20 +76,35 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    void OnCollisionStay2D(Collision2D other) {
+        //only take damage if player is attacking, otherwise player is damaged
+        if (other.gameObject.tag == "Player") {
+            //TODO: optimize script to allow for ease of changes if adding more players
+            if ((Time.time - lastDamageTime >= damagePeriod) && (
+                (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) ||
+                (other.gameObject.GetComponent<Player2Controller>() != null && other.gameObject.GetComponent<Player2Controller>().attack))) {
+                --health;
+                doKnockback = true;
+                lastDamageTime = Time.time; //update when enemy was last damaged
+                //allow for enemies to get knocked back upon getting hit
+                var force = transform.position - other.transform.position;
+                force.Normalize();
+                rb2d.AddForce(force * knockback);
+                Invoke("StopForce", 0.2f);
+            }
+        }
+        if (other.gameObject.tag == "PlayerBoundary") {
+            // if enemy collides with player boundary, ignore collision
+            Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
+        }
+    }
+
     private void StopForce() {
         //stop knockback force from being applied forever
         var force = transform.position - player.transform.position;
         force.Normalize();
         rb2d.AddForce(-force * knockback);
         doKnockback = false;
-    }
-
-    private void damagePlayer() {
-        if (Time.time > damageCoolDown) {
-            player.GetComponent<PlayerController>().health--; //subtract health
-            player.GetComponent<PlayerController>().startBlinking = true; //begin sprite blinking
-            damageCoolDown += Time.time; //reset cooldown
-        }
-
+        curDamagePlayer = false;
     }
 }

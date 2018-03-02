@@ -663,6 +663,7 @@ MonoBehaviour:
   health: 10
   speed: 5
   attack: 0
+  damagePeriod: 2
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
 --- !u!212 &333820191
@@ -1534,6 +1535,7 @@ MonoBehaviour:
   health: 10
   speed: 5
   attack: 0
+  damagePeriod: 2
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
 --- !u!50 &946537528
@@ -2166,6 +2168,21 @@ Prefab:
     - target: {fileID: 1064445964137186, guid: c2f077ef9e55bda488cd9935d787dbf7, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448831633185420, guid: c2f077ef9e55bda488cd9935d787dbf7,
+        type: 2}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448831633185420, guid: c2f077ef9e55bda488cd9935d787dbf7,
+        type: 2}
+      propertyPath: alivePlayers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448831633185420, guid: c2f077ef9e55bda488cd9935d787dbf7,
+        type: 2}
+      propertyPath: damagePeriod
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2f077ef9e55bda488cd9935d787dbf7, type: 2}

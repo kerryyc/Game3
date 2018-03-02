@@ -30,7 +30,6 @@ public class UIHandler : MonoBehaviour {
 
         surviveTime -= Time.deltaTime;
         timer.text = ((int)surviveTime).ToString();
-        Debug.Log(surviveTime);
         if((int)surviveTime == 0) {
             Time.timeScale = 0;
             winObject.SetActive(true);

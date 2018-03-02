@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour {
     private int RIGHT = 4;
     private int direction = 1;
 
+    //damage over time variables
+    private float lastDamageTime = 0f;
+    public float damagePeriod = 0.5f;
+
     //private component variables
     private Rigidbody2D rb2d;
     private Animator anim;
@@ -59,7 +63,15 @@ public class PlayerController : MonoBehaviour {
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
         }
-        
+    }
+
+    void OnCollisionStay2D(Collision2D coll) {
+        if(Time.time - lastDamageTime >= damagePeriod && coll.gameObject.tag == "Enemy") {
+            startBlinking = true; //start blinking effect
+            health -= 1; //decrement health
+            spriteBlinkingTotalTimer = 0f; //reset blinking timer
+            lastDamageTime = Time.time;
+        }
     }
 
     private void Attack() {
