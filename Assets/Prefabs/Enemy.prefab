@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c749f764451ef94d83f487d9c8a756a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 3
   speed: 2
   knockback: 250
   alivePlayers: 2

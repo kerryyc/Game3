@@ -2553,7 +2553,7 @@ MonoBehaviour:
   isMenu: 0
   levelNum: 1
   sceneName: 
-  surviveTime: 60
+  surviveTime: 61
   canvas: {fileID: 344776161}
   gameOver: {fileID: 2020748166}
   winObject: {fileID: 755892397}

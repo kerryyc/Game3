@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        if (Time.timeScale != 1) {
+        if (Time.timeScale != 0) {
             Move();
             Attack();
 
