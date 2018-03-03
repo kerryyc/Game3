@@ -725,10 +725,10 @@ GameObject:
   m_Component:
   - component: {fileID: 333820192}
   - component: {fileID: 333820191}
+  - component: {fileID: 333820190}
   - component: {fileID: 333820189}
   - component: {fileID: 333820188}
   - component: {fileID: 333820187}
-  - component: {fileID: 333820190}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -1852,7 +1852,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 1
   isPlayer2: 0
-  damagePeriod: 0.5
+  damagePeriod: 2
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
 --- !u!50 &946537528
