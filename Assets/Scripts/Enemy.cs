@@ -62,26 +62,15 @@ public class Enemy : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other) {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player") {
-            //TODO: optimize script to allow for ease of changes if adding more players
             if (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) {
                 --health;
                 lastDamageTime = Time.time; //update when enemy was last damaged
-                doKnockback = true;
-                //allow for enemies to get knocked back upon getting hit
-                var force = transform.position - other.transform.position;
-                force.Normalize();
-                rb2d.AddForce(force * knockback);
-                Invoke("StopForce", 0.2f);
+                performKnockback(other, knockback);
             }
         }
 
         if(other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
-            doKnockback = true;
-            //allow for enemies to get knocked back upon getting hit
-            var force = transform.position - other.transform.position;
-            force.Normalize();
-            rb2d.AddForce(force * knockback);
-            Invoke("StopForce", 0.2f);
+            performKnockback(other, knockback);
         }
 
         if (other.gameObject.tag == "PlayerBoundary")
@@ -92,31 +81,24 @@ public class Enemy : MonoBehaviour {
     }
 
     void OnCollisionStay2D(Collision2D other) {
-        //only take damage if player is attacking, otherwise player is damaged
-        if (other.gameObject.tag == "Player") {
-            //TODO: optimize script to allow for ease of changes if adding more players
-            if ((Time.time - lastDamageTime >= damagePeriod) &&
-                (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack)) {
-                --health;
-                doKnockback = true;
-                lastDamageTime = Time.time; //update when enemy was last damaged
-                //allow for enemies to get knocked back upon getting hit
-                var force = transform.position - other.transform.position;
-                force.Normalize();
-                rb2d.AddForce(force * knockback);
-                Invoke("StopForce", 0.2f);
-            }
+        //if last time the enemy took damage is greater than the damage period
+        if (other.gameObject.tag == "Player" && Time.time - lastDamageTime >= damagePeriod) {
+                OnCollisionEnter2D(other);
         }
 
         if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
-            doKnockback = true;
-            //allow for enemies to get knocked back upon getting hit
-            var force = transform.position - other.transform.position;
-            force.Normalize();
-            rb2d.AddForce(force * 50);
-            lastKnockTime = Time.time;
-            Invoke("StopForce", 0.2f);
+            performKnockback(other, 50f);
         }
+    }
+
+    private void performKnockback(Collision2D other, float kForce) {
+        doKnockback = true;
+        //allow for enemies to get knocked back upon getting hit
+        var force = transform.position - other.transform.position;
+        force.Normalize();
+        rb2d.AddForce(force * kForce);
+        lastKnockTime = Time.time;
+        Invoke("StopForce", 0.2f);
     }
 
     private void StopForce() {
@@ -137,6 +119,5 @@ public class Enemy : MonoBehaviour {
             anim.Play("skel_run_left");
         else if (detectDistance.x < 0)
             anim.Play("skel_run_right");
-           
     }
 }

@@ -65,15 +65,13 @@ public class PlayerController : MonoBehaviour {
             startBlinking = true; //start blinking effect
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
+            lastDamageTime = Time.time;
         }
     }
 
     void OnCollisionStay2D(Collision2D coll) {
-        if(!attack && Time.time - lastDamageTime >= damagePeriod && coll.gameObject.tag == "Enemy") {
-            startBlinking = true; //start blinking effect
-            health -= 1; //decrement health
-            spriteBlinkingTotalTimer = 0f; //reset blinking timer
-            lastDamageTime = Time.time;
+        if(Time.time - lastDamageTime >= damagePeriod) {
+            OnCollisionEnter2D(coll);
         }
     }
 
