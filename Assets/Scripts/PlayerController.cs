@@ -53,11 +53,13 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        Move();
-        Attack();
+        if (Time.timeScale != 1) {
+            Move();
+            Attack();
 
-        if (startBlinking)
-            SpriteBlinkingEffect();
+            if (startBlinking)
+                SpriteBlinkingEffect();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll) {
@@ -101,7 +103,6 @@ public class PlayerController : MonoBehaviour {
         if (vertical != 0 && Mathf.Abs(vertical) < 1) {
             vertical = 0;
         }
-
         //set layer depending on direction
         SetLayer(direction, 0f); //set current layer weight to zero
         if (horizontal > 0)
