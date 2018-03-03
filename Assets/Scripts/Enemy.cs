@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour {
     public float knockback = 250f;
     public int alivePlayers = 2;
 
-    private float damageCoolDown = 1f;
     [HideInInspector] public bool doKnockback = false;
     private bool curDamagePlayer = false;
 
