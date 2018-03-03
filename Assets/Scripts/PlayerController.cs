@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
 
     [HideInInspector] public bool attack = false;
 
+    public bool isPlayer1 = true;
+    public bool isPlayer2 = false;
+
     //direction variables
     private int DOWN = 1;
     private int UP = 2;
@@ -18,7 +21,7 @@ public class PlayerController : MonoBehaviour {
 
     //damage over time variables
     private float lastDamageTime = 0f;
-    public float damagePeriod = 0.5f;
+    public float damagePeriod = 2f;
 
     //private component variables
     private Rigidbody2D rb2d;
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Attack() {
-        if (Input.GetButtonDown("Fire1")) {
+        if ((isPlayer1 && Input.GetButtonDown("Fire1")) || (isPlayer2 && Input.GetButton("Fire2"))) {
             attack = true;
             anim.SetTrigger("attack");
             Invoke("DisableAttack", 0.2f); //allow player invulnerability while attacking, disable in 0.2f
@@ -84,8 +87,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Move() {
         //get directional input
-        float horizontal = Input.GetAxisRaw("Horizontal1") * speed;
-        float vertical = Input.GetAxisRaw("Vertical1") * speed;
+        float horizontal = 0, vertical = 0;
+        if (isPlayer1) {
+            horizontal = Input.GetAxisRaw("Horizontal1") * speed;
+            vertical = Input.GetAxisRaw("Vertical1") * speed;
+        }
+        else if (isPlayer2) {
+            horizontal = Input.GetAxisRaw("Horizontal2") * speed;
+            vertical = Input.GetAxisRaw("Vertical2") * speed;
+        }
 
         if (horizontal != 0 && Mathf.Abs(horizontal) < 1) {
             horizontal = 0;
@@ -97,11 +107,7 @@ public class PlayerController : MonoBehaviour {
         //set layer depending on direction
         SetLayer(direction, 0f); //set current layer weight to zero
         if (horizontal > 0)
-        {
             direction = RIGHT;
-
-        }
-         
         else if (horizontal < 0)
             direction = LEFT;
         else if (vertical > 0)

@@ -63,8 +63,7 @@ public class Enemy : MonoBehaviour {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player") {
             //TODO: optimize script to allow for ease of changes if adding more players
-            if ((other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) ||
-                (other.gameObject.GetComponent<Player2Controller>() != null && other.gameObject.GetComponent<Player2Controller>().attack)) {
+            if (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) {
                 --health;
                 lastDamageTime = Time.time; //update when enemy was last damaged
                 doKnockback = true;
@@ -96,9 +95,8 @@ public class Enemy : MonoBehaviour {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player") {
             //TODO: optimize script to allow for ease of changes if adding more players
-            if ((Time.time - lastDamageTime >= damagePeriod) && (
-                (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack) ||
-                (other.gameObject.GetComponent<Player2Controller>() != null && other.gameObject.GetComponent<Player2Controller>().attack))) {
+            if ((Time.time - lastDamageTime >= damagePeriod) &&
+                (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack)) {
                 --health;
                 doKnockback = true;
                 lastDamageTime = Time.time; //update when enemy was last damaged
