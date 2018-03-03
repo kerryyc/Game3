@@ -35,10 +35,15 @@ public class PlayerController : MonoBehaviour {
     private float spriteBlinkingTotalDuration = 1.0f;
     [HideInInspector] public bool startBlinking = false;
 
+    // Melee sound effect
+    private AudioSource soundSource;
+    public AudioClip meleeSoundEffect; 
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
+        soundSource = GetComponent<AudioSource>();
+        
     }
 
     void Update() {
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour {
 
     private void Attack() {
         if ((isPlayer1 && Input.GetButtonDown("Fire1")) || (isPlayer2 && Input.GetButton("Fire2"))) {
+            // play sound effect
+            soundSource.PlayOneShot(meleeSoundEffect);
             attack = true;
             anim.SetTrigger("attack");
             Invoke("DisableAttack", 0.2f); //allow player invulnerability while attacking, disable in 0.2f
