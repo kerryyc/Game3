@@ -34,26 +34,32 @@ public class Enemy : MonoBehaviour {
             rb2d.velocity = new Vector2(0, 0);
 
         //when health is 0
-        if (health <= 0)
-            Destroy(this.gameObject);
-
-        //checks for player that is closest to enemy (might need to be optimized)
-        allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        if (alivePlayers > 0) {
-            int minIndex = 0;
-            float minDistance = float.MaxValue;
-            for (int i = 0; i < alivePlayers; ++i) {
-                float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
-                if (distance < minDistance) {
-                    minIndex = i;
-                    minDistance = distance;
+        if (health <= 0) {
+            //trigger death animation, disable physics, then destroy
+            anim.Play("explosion");
+            GetComponent<Collider2D>().enabled = false;
+            rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            Destroy(this.gameObject, 0.8f);
+        }
+        else {
+            //checks for player that is closest to enemy (might need to be optimized)
+            allPlayers = GameObject.FindGameObjectsWithTag("Player");
+            if (alivePlayers > 0) {
+                int minIndex = 0;
+                float minDistance = float.MaxValue;
+                for (int i = 0; i < alivePlayers; ++i) {
+                    float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
+                    if (distance < minDistance) {
+                        minIndex = i;
+                        minDistance = distance;
+                    }
                 }
-            }
-            player = allPlayers[minIndex];
+                player = allPlayers[minIndex];
 
-            //moves toward player until it reaches certain distance
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-            updateAnimations();
+                //moves toward player until it reaches certain distance
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                updateAnimations();
+            }
         }
     }
 
