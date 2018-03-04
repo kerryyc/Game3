@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Attack() {
-        if ((isPlayer1 && Input.GetButtonDown("Fire1")) || (isPlayer2 && Input.GetButton("Fire2"))) {
+        if ((isPlayer1 && Input.GetButtonDown("Fire1")) || (isPlayer2 && Input.GetButtonDown("Fire2"))) {
             // play sound effect
             soundSource.PlayOneShot(meleeSoundEffect);
             attack = true;

@@ -13,26 +13,40 @@ public class UIHandler : MonoBehaviour {
     public GameObject canvas;
     public GameObject gameOver;
     public GameObject winObject;
+    public GameObject pauseObject;
     public Text timer;
-    private bool pause = false;
 
     void Update() {
         if (isMenu) return; //skip if menu script
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
         if (players.Length == 0) {
+
             Time.timeScale = 0;
             gameOver.SetActive(true);
         }
-        else
-            Time.timeScale = 1;
 
+        if (Input.GetButtonDown("Pause")) {
+            PauseScene();
+        }
+        if (Input.GetButtonDown("Quit")) {
+            QuitGame();
+        }
+
+        //calculate survive time and update text
         surviveTime -= Time.deltaTime;
         timer.text = ((int)surviveTime).ToString();
+
+        //if survive time is 0, players have won
         if((int)surviveTime == 0) {
             Time.timeScale = 0;
             winObject.SetActive(true);
+        }
+
+        //make player sprite visible even if game is paused
+        if(Time.timeScale == 0) {
+            EnableSpriteRend(players);
         }
     }
 
@@ -61,17 +75,21 @@ public class UIHandler : MonoBehaviour {
     }
 
     public void PauseScene() {
+        //pauses game and enables pause UI element
+        pauseObject.SetActive(true);
         Time.timeScale = 0;
-        canvas.SetActive(false);
-
-        //player.GetComponent<SpriteRenderer>().enabled = false;
-        SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
     }
 
     public void UnPauseScene() {
+        //resumes game and disables pause UI element
+        pauseObject.SetActive(false);
         Time.timeScale = 1;
+    }
 
-        //player.GetComponent<SpriteRenderer>().enabled = true;
-        SceneManager.UnloadSceneAsync("PauseMenu");
+    private void EnableSpriteRend(GameObject[] players) {
+        //enable SpriteRenderer component on players
+        foreach (GameObject player in players) {
+            player.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 }

@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour {
     public int alivePlayers = 2;
 
     [HideInInspector] public bool doKnockback = false;
-    private bool curDamagePlayer = false;
 
     private float lastDamageTime = 0f;
     public float damagePeriod = 0.5f;
@@ -68,7 +67,8 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        if(other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
+        //get knocked back if collision is an enemy getting knocked back
+        if (other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
             performKnockback(other, knockback);
         }
 
@@ -85,6 +85,7 @@ public class Enemy : MonoBehaviour {
                 OnCollisionEnter2D(other);
         }
 
+        //get knocked back if collision is an enemy getting knocked back
         if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
             performKnockback(other, 50f);
         }
@@ -109,6 +110,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void updateAnimations() {
+        //sets animation based upon which direction enemy is going toward
         Vector2 detectDistance = transform.position - player.transform.position;
         if (detectDistance.y > detectDistance.x && detectDistance.y > 0)
             anim.Play("skel_run_down");
