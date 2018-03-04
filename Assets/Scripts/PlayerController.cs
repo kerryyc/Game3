@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour {
             soundSource.PlayOneShot(meleeSoundEffect);
             attack = true;
             anim.SetTrigger("attack");
-            Invoke("DisableAttack", 0.5f); //allow player invulnerability while attacking, disable in 0.2f
+            Invoke("DisableAttack", 0.2f); //allow player invulnerability while attacking, disable in 0.2f
         }
     }
 

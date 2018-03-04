@@ -16,6 +16,10 @@ public class UIHandler : MonoBehaviour {
     public GameObject pauseObject;
     public Text timer;
 
+    void Awake() {
+        Time.timeScale = 1;
+    }
+
     void Update() {
         if (isMenu) return; //skip if menu script
 
