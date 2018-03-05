@@ -37,24 +37,46 @@ public class PlayerController : MonoBehaviour {
 
     // Melee sound effect
     private AudioSource soundSource;
-    public AudioClip meleeSoundEffect; 
+    public AudioClip deathSoundEffect;
+    public AudioClip meleeSoundEffect;
+    public GameObject onDeathObject;
+    private bool isDeathSoundPlayed = false;
+
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
         soundSource = GetComponent<AudioSource>();
+
         
     }
 
     void Update() {
         //when health reaches 0
         if (health <= 0) {
+            // play sound effect on death one time
+            if (!isDeathSoundPlayed)
+            {
+                Debug.Log("Play death sound");
+                soundSource.PlayOneShot(deathSoundEffect);
+                //onDeathObject.SetActive(true);
+                isDeathSoundPlayed = true;
+
+            }
             //subtract alive player count
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject enemy in enemies)
                 enemy.GetComponent<Enemy>().alivePlayers -= 1;
+
+
             //deactive player
-            this.gameObject.SetActive(false);
+            // moved this line of code into the disable player 
+            // to invoke
+            // this.gameObject.SetActive(false);
+
+            Invoke("disablePlayer", .8f);
+            
+                
             return;
         }
 
@@ -64,6 +86,7 @@ public class PlayerController : MonoBehaviour {
 
             if (startBlinking)
                 SpriteBlinkingEffect();
+
         }
     }
 
@@ -176,4 +199,10 @@ public class PlayerController : MonoBehaviour {
     private void DisableAttack() {
         attack = false;
     }
+    private void disablePlayer()
+    {
+        //deactive player
+        this.gameObject.SetActive(false);
+    }
+
 }

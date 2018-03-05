@@ -23,9 +23,15 @@ public class Enemy : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Animator anim;
 
+    //  death sound effect
+    private AudioSource soundSource;
+    public AudioClip enemyDeathSound;
+    private bool isDeathSoundPlayed = false;
+
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        soundSource = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -36,10 +42,19 @@ public class Enemy : MonoBehaviour {
         //when health is 0
         if (health <= 0) {
             //trigger death animation, disable physics, then destroy
+            // play death sound effect
+            if (!isDeathSoundPlayed)
+            {
+                soundSource.PlayOneShot(enemyDeathSound); // play explosion
+                isDeathSoundPlayed = true;
+            }
+            
             anim.Play("explosion");
             GetComponent<Collider2D>().enabled = false;
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-            Destroy(this.gameObject, 0.8f);
+            //Destroy(this.gameObject, 0.8f);
+            // made time longer to account for the sound effect
+            Destroy(this.gameObject, 1.4f);
         }
         else {
             //checks for player that is closest to enemy (might need to be optimized)
