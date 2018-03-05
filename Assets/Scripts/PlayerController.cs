@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour {
     private float lastDamageTime = 0f;
     public float damagePeriod = 2f;
 
+    //grave object
+    public GameObject tombstone;
+
     //private component variables
     private Rigidbody2D rb2d;
     private Animator anim;
@@ -39,7 +42,6 @@ public class PlayerController : MonoBehaviour {
     private AudioSource soundSource;
     public AudioClip deathSoundEffect;
     public AudioClip meleeSoundEffect;
-    public GameObject onDeathObject;
     private bool isDeathSoundPlayed = false;
 
     void Awake() {
@@ -47,8 +49,6 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
         soundSource = GetComponent<AudioSource>();
-
-        
     }
 
     void Update() {
@@ -57,26 +57,19 @@ public class PlayerController : MonoBehaviour {
             // play sound effect on death one time
             if (!isDeathSoundPlayed)
             {
-                Debug.Log("Play death sound");
+                Instantiate(tombstone, new Vector2(transform.position.x, transform.position.y), transform.rotation);
+
                 soundSource.PlayOneShot(deathSoundEffect);
-                //onDeathObject.SetActive(true);
                 isDeathSoundPlayed = true;
 
+                //disable colliders and UI
+                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                GetComponent<Collider2D>().enabled = false;
+                spriteRend.enabled = false;
+                transform.GetChild(0).gameObject.SetActive(false);
             }
-            //subtract alive player count
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-                enemy.GetComponent<Enemy>().alivePlayers -= 1;
-
-
             //deactive player
-            // moved this line of code into the disable player 
-            // to invoke
-            // this.gameObject.SetActive(false);
-
             Invoke("disablePlayer", .8f);
-            
-                
             return;
         }
 

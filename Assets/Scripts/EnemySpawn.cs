@@ -16,9 +16,7 @@ public class EnemySpawn : MonoBehaviour {
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //find players
-            GameObject newEnemy = Instantiate(enemy, new Vector2(transform.position.x, transform.position.y), transform.rotation); //create new enemy
-            newEnemy.GetComponent<Enemy>().alivePlayers = players.Length; //set alive player count on new enemy
+            Instantiate(enemy, new Vector2(transform.position.x, transform.position.y), transform.rotation); //create new enemy
             timer = delay; //set delay
         }
     }

@@ -59,10 +59,11 @@ public class Enemy : MonoBehaviour {
         else {
             //checks for player that is closest to enemy (might need to be optimized)
             allPlayers = GameObject.FindGameObjectsWithTag("Player");
+            alivePlayers = allPlayers.Length;
             if (alivePlayers > 0) {
                 int minIndex = 0;
                 float minDistance = float.MaxValue;
-                for (int i = 0; i < alivePlayers; ++i) {
+                for (int i = 0; i < alivePlayers && allPlayers[i].GetComponent<PlayerController>().health > 0; ++i) {
                     float distance = Vector2.Distance(allPlayers[i].transform.position, transform.position);
                     if (distance < minDistance) {
                         minIndex = i;
