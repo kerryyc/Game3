@@ -200,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   speed: 2
-  knockback: 250
+  knockback: 400
   alivePlayers: 2
   doKnockback: 0
   damagePeriod: 0.5

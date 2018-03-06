@@ -897,7 +897,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 0
   isPlayer2: 1
-  damagePeriod: 2
+  damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
@@ -2126,7 +2126,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 1
   isPlayer2: 0
-  damagePeriod: 2
+  damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
@@ -3017,33 +3017,7 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.85714287
-      objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.3714286
-      objectReference: {fileID: 0}
-    - target: {fileID: 61243656748614878, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 0.85714287
-      objectReference: {fileID: 0}
-    - target: {fileID: 61243656748614878, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 1.3714286
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2f077ef9e55bda488cd9935d787dbf7, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1364097307 stripped

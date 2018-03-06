@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour {
 
         //get knocked back if collision is an enemy getting knocked back
         if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback) {
-            performKnockback(other, 50f);
+            performKnockback(other, 1f);
         }
     }
 
