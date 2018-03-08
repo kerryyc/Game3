@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour {
     //grave object
     public GameObject tombstone;
 
+    //how often to recover 1 hp
+    private float defaultHealth;
+    public float recoverHealthRate = 10f;
+    private float lastHealTime = 0f;
+
     //private component variables
     private Rigidbody2D rb2d;
     private Animator anim;
@@ -49,6 +54,7 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
         soundSource = GetComponent<AudioSource>();
+        defaultHealth = health;
     }
 
     void Update() {
@@ -74,6 +80,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Time.timeScale != 0) {
+            RecoverHealth();
             Move();
             Attack();
 
@@ -85,6 +92,9 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (Time.time - lastDamageTime >= damagePeriod && !attack && coll.gameObject.tag == "Enemy") {
+            //start health regen when damage is first taken
+            lastHealTime = Time.time;
+
             startBlinking = true; //start blinking effect
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
@@ -94,6 +104,14 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionStay2D(Collision2D coll) {
         OnCollisionEnter2D(coll);
+    }
+
+    private void RecoverHealth() {
+        //recovers one health at recoverHealthRate
+        if (Time.time - lastHealTime >= recoverHealthRate && health < defaultHealth) {
+            health+=1;
+            lastHealTime = Time.time;
+        }
     }
 
     private void Attack() {
