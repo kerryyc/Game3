@@ -22,27 +22,50 @@ public class Seeker : MonoBehaviour {
     private float knockPeriod = 0.5f;
 
     private Rigidbody2D rb2d;
+    private Animator anim;
 
-    private PlayerController player;
+    private GameObject player;
     private GameObject[] allPlayers;
+
+    //  death sound effect
+    private AudioSource soundSource;
+    public AudioClip enemyDeathSound;
+    private bool isDeathSoundPlayed = false;
 
     // Use this for initialization
     void Start () {
         // at spawn, find the player with the lowest amount of health and follow this player
         allPlayers = GameObject.FindGameObjectsWithTag("Player");
         int indexPlayerLowestHP = findMinIndex();
-        player = allPlayers[indexPlayerLowestHP].GetComponent<PlayerController>();
+        player = allPlayers[indexPlayerLowestHP];
 
         coolDownTime = shotTimeInterval;
         rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
         // currDistance is the distance between the player and enemy
         if (!doKnockback)
             rb2d.velocity = new Vector2(0, 0);
+
+        //when health is 0
+        if (health <= 0) {
+            //trigger death animation, disable physics, then destroy
+            // play death sound effect
+            if (!isDeathSoundPlayed) {
+                soundSource.PlayOneShot(enemyDeathSound); // play explosion
+                isDeathSoundPlayed = true;
+            }
+
+            anim.Play("explosion");
+            GetComponent<Collider2D>().enabled = false;
+            rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            //Destroy(this.gameObject, 0.8f);
+            // made time longer to account for the sound effect
+            Destroy(this.gameObject, 1.4f);
+        }
 
         float currDistance = Vector2.Distance(transform.position, player.transform.position);
         allPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -52,7 +75,7 @@ public class Seeker : MonoBehaviour {
         // if the player's health is not 0
         if (alivePlayers != 0)
         {
-            if (player.health != 0)
+            if (player.GetComponent<PlayerController>().health != 0)
             {
                 // if the distance between the enemy and player is greater than stopping distance
                 if (currDistance > stoppingDistance)
@@ -85,11 +108,12 @@ public class Seeker : MonoBehaviour {
                 // update the array of players
                 allPlayers = GameObject.FindGameObjectsWithTag("Player");
                 int index = findMinIndex();
-                player = allPlayers[index].GetComponent<PlayerController>();
+                player = allPlayers[index];
             }
 
             // shoot bullets
             shoot();
+            updateAnimations();
         }
         
 	}
@@ -144,7 +168,6 @@ public class Seeker : MonoBehaviour {
     // find the player with the lowest health, and return the index
     private int findMinIndex()
     {
-      
         int index = 0;
         float minHealth = float.MaxValue;
 
@@ -160,13 +183,14 @@ public class Seeker : MonoBehaviour {
         }
         return index;
     }
+
     private void shoot()
     {
         if (coolDownTime <= 0)
         {
             
             GameObject bullet = Instantiate(projectile, transform.position, transform.rotation);
-            bullet.GetComponent<Projectile>().setPlayerController(player);
+            bullet.GetComponent<Rigidbody2D>().velocity = (player.transform.position - bullet.transform.position);
             coolDownTime = shotTimeInterval;
         }
         else
@@ -185,4 +209,17 @@ public class Seeker : MonoBehaviour {
         Invoke("StopForce", 0.2f);
     }
 
+    private void updateAnimations() 
+    {
+        //sets animation based upon which direction enemy is going toward
+        Vector2 detectDistance = transform.position - player.transform.position;
+        if (detectDistance.y > detectDistance.x && detectDistance.y > 0)
+            anim.Play("skel_run_down");
+        else if (detectDistance.y < detectDistance.x && detectDistance.y < 0)
+            anim.Play("skel_run_up");
+        else if (detectDistance.x > 0)
+            anim.Play("skel_run_left");
+        else if (detectDistance.x < 0)
+            anim.Play("skel_run_right");
+    }
 }

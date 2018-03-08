@@ -956,6 +956,7 @@ MonoBehaviour:
   isPlayer2: 1
   damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
+  recoverHealthRate: 10
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
   deathSoundEffect: {fileID: 8300000, guid: 697cf7f9de4581240ab35dcef4e2db23, type: 3}
@@ -2185,6 +2186,7 @@ MonoBehaviour:
   isPlayer2: 0
   damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
+  recoverHealthRate: 10
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
   deathSoundEffect: {fileID: 8300000, guid: 697cf7f9de4581240ab35dcef4e2db23, type: 3}
@@ -2630,7 +2632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1068137199
 Transform:
   m_ObjectHideFlags: 0
