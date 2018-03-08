@@ -42,7 +42,8 @@ public class Seeker : MonoBehaviour {
         coolDownTime = shotTimeInterval;
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-	}
+        soundSource = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
