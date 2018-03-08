@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 323469568}
   - component: {fileID: 323469570}
   - component: {fileID: 323469569}
+  - component: {fileID: 323469571}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -797,6 +798,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 323469567}
+--- !u!114 &323469571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323469567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.8455882, g: 0.8455882, b: 0.8455882, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &330561820
 Prefab:
   m_ObjectHideFlags: 0
@@ -939,7 +954,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 0
   isPlayer2: 1
-  damagePeriod: 2
+  damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
@@ -1956,7 +1971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.100006, y: -15.609985}
+  m_AnchoredPosition: {x: 23.099976, y: -15.609985}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &798800850
@@ -2168,7 +2183,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 1
   isPlayer2: 0
-  damagePeriod: 2
+  damagePeriod: 2.5
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   spriteBlinkingTotalTimer: 0
   startBlinking: 0
@@ -2615,7 +2630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1068137199
 Transform:
   m_ObjectHideFlags: 0
@@ -2847,6 +2862,7 @@ GameObject:
   - component: {fileID: 1206729061}
   - component: {fileID: 1206729063}
   - component: {fileID: 1206729062}
+  - component: {fileID: 1206729064}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2904,13 +2920,29 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Winner!!!!!\n Play Again?"
+  m_Text: 'Winner!!!
+
+    Play Again?'
 --- !u!222 &1206729063
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1206729060}
+--- !u!114 &1206729064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1206729060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.8602941, g: 0.8602941, b: 0.8602941, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1234275915
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,33 +3091,7 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.85714287
-      objectReference: {fileID: 0}
-    - target: {fileID: 212901321429540124, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.3714286
-      objectReference: {fileID: 0}
-    - target: {fileID: 61243656748614878, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 0.85714287
-      objectReference: {fileID: 0}
-    - target: {fileID: 61243656748614878, guid: c2f077ef9e55bda488cd9935d787dbf7,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 1.3714286
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2f077ef9e55bda488cd9935d787dbf7, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1364097307 stripped

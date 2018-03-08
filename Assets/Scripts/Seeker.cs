@@ -45,6 +45,7 @@ public class Seeker : MonoBehaviour {
             rb2d.velocity = new Vector2(0, 0);
 
         float currDistance = Vector2.Distance(transform.position, player.transform.position);
+        allPlayers = GameObject.FindGameObjectsWithTag("Player");
         int alivePlayers = allPlayers.Length;
 
         // Debug.Log(currDistance);
