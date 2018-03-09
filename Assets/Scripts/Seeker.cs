@@ -67,54 +67,49 @@ public class Seeker : MonoBehaviour {
             // made time longer to account for the sound effect
             Destroy(this.gameObject, 1.4f);
         }
+        else {
+            float currDistance = Vector2.Distance(transform.position, player.transform.position);
+            allPlayers = GameObject.FindGameObjectsWithTag("Player");
+            int alivePlayers = allPlayers.Length;
 
-        float currDistance = Vector2.Distance(transform.position, player.transform.position);
-        allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        int alivePlayers = allPlayers.Length;
+            // Debug.Log(currDistance);
+            // if the player's health is not 0
+            if (alivePlayers != 0) {
+                if (player.GetComponent<PlayerController>().health != 0) {
+                    // if the distance between the enemy and player is greater than stopping distance
+                    if (currDistance > stoppingDistance) {
+                        // move towards player
+                        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                    }
 
-        // Debug.Log(currDistance);
-        // if the player's health is not 0
-        if (alivePlayers != 0)
-        {
-            if (player.GetComponent<PlayerController>().health != 0)
-            {
-                // if the distance between the enemy and player is greater than stopping distance
-                if (currDistance > stoppingDistance)
-                {
-                    // move towards player
-                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                    // if the distance between the enemy and player is between stopping distance and retreat distance
+                    else if (currDistance < stoppingDistance &&
+                        currDistance > retreatDistance) {
+                        // stay still
+                        transform.position = this.transform.position;
+                    }
+                    // if player is too close to the enemy
+                    else if (currDistance < retreatDistance) {
+                        // the enemy reverses its direction and retreats
+                        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -speed * Time.deltaTime);
+                    }
+
                 }
 
-                // if the distance between the enemy and player is between stopping distance and retreat distance
-                else if (currDistance < stoppingDistance &&
-                    currDistance > retreatDistance)
-                {
-                    // stay still
-                    transform.position = this.transform.position;
-                }
-                // if player is too close to the enemy
-                else if (currDistance < retreatDistance)
-                {
-                    // the enemy reverses its direction and retreats
-                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -speed * Time.deltaTime);
+                // if the player that the enemy is seeking dies, 
+                // find another player that has the lowest hp 
+                // and follow them instead
+                else {
+                    // update the array of players
+                    allPlayers = GameObject.FindGameObjectsWithTag("Player");
+                    int index = findMinIndex();
+                    player = allPlayers[index];
                 }
 
+                // shoot bullets
+                shoot();
+                updateAnimations();
             }
-
-            // if the player that the enemy is seeking dies, 
-            // find another player that has the lowest hp 
-            // and follow them instead
-            else
-            {
-                // update the array of players
-                allPlayers = GameObject.FindGameObjectsWithTag("Player");
-                int index = findMinIndex();
-                player = allPlayers[index];
-            }
-
-            // shoot bullets
-            shoot();
-            updateAnimations();
         }
         
 	}

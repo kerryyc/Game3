@@ -100,18 +100,19 @@ public class PlayerController : MonoBehaviour {
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
             lastDamageTime = Time.time;
         }
-        // added section when player is hit by bullet
-        if (!attack && coll.gameObject.tag == "Projectile")
-        {
+    }
+
+    void OnCollisionStay2D(Collision2D coll) {
+        OnCollisionEnter2D(coll);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Projectile") {
             startBlinking = true; //start blinking effect
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer
             lastDamageTime = Time.time;
         }
-    }
-
-    void OnCollisionStay2D(Collision2D coll) {
-        OnCollisionEnter2D(coll);
     }
 
     private void RecoverHealth() {

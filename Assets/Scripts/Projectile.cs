@@ -5,16 +5,16 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
     public float speed;
 
+    void Awake() 
+    {
+        Destroy(this.gameObject, 3f);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" || other.tag == "Wall")
         {
-            DestroyProjectile();
+            Destroy(this.gameObject);
         }
-    }
-
-    void DestroyProjectile()
-    {
-        Destroy(this.gameObject);
     }
 }
