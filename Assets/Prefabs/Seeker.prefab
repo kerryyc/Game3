@@ -198,15 +198,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ec08818d8178d4b9c9384d7f5d27ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  stoppingDistance: 6
-  retreatDistance: 3
+  speed: 2
+  stoppingDistance: 3
+  retreatDistance: 5
+  retreatSpeed: 1
   projectile: {fileID: 1675975927228426, guid: b7c1973fb3f825544a9d4014be1ea5b0, type: 2}
   shotTimeInterval: 2
   doKnockback: 0
   damagePeriod: 0.5
   knockback: 400
-  health: 1
+  health: 100
   enemyDeathSound: {fileID: 8300000, guid: 5d4b89d9cf26a9648b8447f268f52e2e, type: 3}
 --- !u!212 &212800080279426248
 SpriteRenderer:

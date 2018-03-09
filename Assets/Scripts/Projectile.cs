@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
-    public float speed;
-
     void Awake() 
     {
         Destroy(this.gameObject, 3f);

@@ -6,6 +6,7 @@ public class Seeker : MonoBehaviour {
     public float speed;
     public float stoppingDistance;
     public float retreatDistance;
+    public float retreatSpeed = 0.5f;
 
     public GameObject projectile;
     public float shotTimeInterval;
@@ -91,7 +92,7 @@ public class Seeker : MonoBehaviour {
                     // if player is too close to the enemy
                     else if (currDistance < retreatDistance) {
                         // the enemy reverses its direction and retreats
-                        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -speed * Time.deltaTime);
+                        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -speed * retreatSpeed * Time.deltaTime);
                     }
 
                 }
@@ -118,6 +119,7 @@ public class Seeker : MonoBehaviour {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player")
         {
+            player = other.gameObject; //change target to player that attacked
             if (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack)
             {
                 --health;
