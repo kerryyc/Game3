@@ -7,6 +7,7 @@ public class Seeker : MonoBehaviour {
     public float stoppingDistance;
     public float retreatDistance;
     public float retreatSpeed = 0.5f;
+    public float shootSpeed = 2f;
 
     public GameObject projectile;
     public float shotTimeInterval;
@@ -119,9 +120,9 @@ public class Seeker : MonoBehaviour {
         //only take damage if player is attacking, otherwise player is damaged
         if (other.gameObject.tag == "Player")
         {
-            player = other.gameObject; //change target to player that attacked
             if (other.gameObject.GetComponent<PlayerController>() != null && other.gameObject.GetComponent<PlayerController>().attack)
             {
+                player = other.gameObject; //change target to player that attacked
                 --health;
                 lastDamageTime = Time.time; //update when enemy was last damaged
                 performKnockback(other, knockback);
@@ -213,7 +214,9 @@ public class Seeker : MonoBehaviour {
         {
             
             GameObject bullet = Instantiate(projectile, transform.position, transform.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = (player.transform.position - bullet.transform.position);
+            Vector2 direction = player.transform.position - bullet.transform.position;
+            direction.Normalize();
+            bullet.GetComponent<Rigidbody2D>().velocity = (direction * shootSpeed);
             coolDownTime = shotTimeInterval;
         }
         else

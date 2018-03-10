@@ -202,6 +202,7 @@ MonoBehaviour:
   stoppingDistance: 3
   retreatDistance: 5
   retreatSpeed: 1
+  shootSpeed: 5
   projectile: {fileID: 1675975927228426, guid: b7c1973fb3f825544a9d4014be1ea5b0, type: 2}
   shotTimeInterval: 2
   doKnockback: 0
