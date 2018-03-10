@@ -9,6 +9,8 @@ public class Seeker : MonoBehaviour {
     public float retreatSpeed = 0.5f;
     public float shootSpeed = 2f;
 
+    private bool passedBoundary = false;
+
     public GameObject projectile;
     public float shotTimeInterval;
     private float coolDownTime;
@@ -130,11 +132,6 @@ public class Seeker : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        // Jansen Yan: account for collision between seekers
-        /*if (other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
-        {
-            performKnockback(other, knockback);
-        }*/
         if (other.gameObject.tag == "Enemy")
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
@@ -146,7 +143,7 @@ public class Seeker : MonoBehaviour {
                 performKnockback(other, 50f);
             }
         }
-        if (other.gameObject.tag == "PlayerBoundary")
+        if (!passedBoundary && other.gameObject.tag == "PlayerBoundary")
         {
             // if enemy collides with player boundary, ignore collision
             Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
@@ -161,11 +158,6 @@ public class Seeker : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        // Jansen Yan: accounted for collisions between seekers
-        /*if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
-        { 
-            performKnockback(other, 50f);
-        } */
         if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy")
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
@@ -180,6 +172,16 @@ public class Seeker : MonoBehaviour {
 
 
     }
+
+    void OnCollisionExit2D(Collision2D other) 
+    {
+        //if it passes boundary, disable passing it
+        if (other.gameObject.tag == "PlayerBoundary") {
+            passedBoundary = true;
+            Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>(), false);
+        }
+    }
+
     private void StopForce()
     {
         //stop knockback force from being applied forever

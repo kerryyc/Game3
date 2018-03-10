@@ -90,11 +90,6 @@ public class Enemy : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        // Jansen Yan: account for collision between seekers
-        /*if (other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
-        {
-            performKnockback(other, knockback);
-        }*/
         if (other.gameObject.tag == "Enemy")
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
@@ -121,11 +116,6 @@ public class Enemy : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        // Jansen Yan: accounted for collisions between seekers
-        /*if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
-        { 
-            performKnockback(other, 50f);
-        } */
         if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy")
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
@@ -137,8 +127,6 @@ public class Enemy : MonoBehaviour {
                 performKnockback(other, 50f);
             }
         }
-
-
     }
 
     private void performKnockback(Collision2D other, float kForce) {

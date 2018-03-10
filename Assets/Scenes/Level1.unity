@@ -369,7 +369,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4214191195568756, guid: 0eea4b240fa3ec84e99f43054cc51e88, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -10.62
+      value: -10.31
       objectReference: {fileID: 0}
     - target: {fileID: 4214191195568756, guid: 0eea4b240fa3ec84e99f43054cc51e88, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2235,7 +2235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3710b0914a9c75f4fb76252a62d88594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 100
   speed: 5
   attack: 0
   isPlayer1: 1
@@ -2745,11 +2745,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4214191195568756, guid: 0eea4b240fa3ec84e99f43054cc51e88, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.3
+      value: -2.56
       objectReference: {fileID: 0}
     - target: {fileID: 4214191195568756, guid: 0eea4b240fa3ec84e99f43054cc51e88, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: -3.34
       objectReference: {fileID: 0}
     - target: {fileID: 4214191195568756, guid: 0eea4b240fa3ec84e99f43054cc51e88, type: 2}
       propertyPath: m_LocalPosition.z
