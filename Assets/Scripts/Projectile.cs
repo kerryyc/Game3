@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
     void Awake() 
     {
-        Destroy(this.gameObject, 3f);
+        Destroy(this.gameObject, 8f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

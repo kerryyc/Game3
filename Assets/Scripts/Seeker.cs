@@ -129,11 +129,22 @@ public class Seeker : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        if (other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
+        // Jansen Yan: account for collision between seekers
+        /*if (other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
         {
             performKnockback(other, knockback);
+        }*/
+        if (other.gameObject.tag == "Enemy")
+        {
+            if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
+            {
+                performKnockback(other, 50f);
+            }
+            else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
+            {
+                performKnockback(other, 50f);
+            }
         }
-
         if (other.gameObject.tag == "PlayerBoundary")
         {
             // if enemy collides with player boundary, ignore collision
@@ -149,10 +160,24 @@ public class Seeker : MonoBehaviour {
         }
 
         //get knocked back if collision is an enemy getting knocked back
-        if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
-        {
+        // Jansen Yan: accounted for collisions between seekers
+        /*if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy" && other.gameObject.GetComponent<Enemy>().doKnockback)
+        { 
             performKnockback(other, 50f);
+        } */
+        if (Time.time - lastKnockTime >= knockPeriod && other.gameObject.tag == "Enemy")
+        {
+            if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
+            {
+                performKnockback(other, 50f);
+            }
+            else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
+            {
+                performKnockback(other, 50f);
+            }
         }
+
+
     }
     private void StopForce()
     {

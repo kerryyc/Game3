@@ -207,7 +207,7 @@ MonoBehaviour:
   doKnockback: 0
   damagePeriod: 0.5
   knockback: 400
-  health: 100
+  health: 1
   enemyDeathSound: {fileID: 8300000, guid: 5d4b89d9cf26a9648b8447f268f52e2e, type: 3}
 --- !u!212 &212800080279426248
 SpriteRenderer:

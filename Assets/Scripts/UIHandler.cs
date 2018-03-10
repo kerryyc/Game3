@@ -14,10 +14,26 @@ public class UIHandler : MonoBehaviour {
     public GameObject gameOver;
     public GameObject winObject;
     public GameObject pauseObject;
+        
+    // Jansen Yan, music stuff
+    private AudioSource soundSource;
+    public AudioClip backgroundMusic;
+
+
     public Text timer;
 
+    
     void Awake() {
+
         Time.timeScale = 1;
+        if (!isMenu)
+        {
+            // play the background music
+            soundSource = GetComponent<AudioSource>();
+            soundSource.clip = backgroundMusic;
+            soundSource.Play();
+        }
+        
     }
 
     void Update() {
@@ -26,7 +42,7 @@ public class UIHandler : MonoBehaviour {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
         if (players.Length == 0) {
-
+            soundSource.Stop();
             Time.timeScale = 0;
             gameOver.SetActive(true);
         }
@@ -44,13 +60,16 @@ public class UIHandler : MonoBehaviour {
 
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
+            soundSource.Stop();
             Time.timeScale = 0;
+        
             winObject.SetActive(true);
         }
 
         //make player sprite visible even if game is paused
         if(Time.timeScale == 0) {
             EnableSpriteRend(players);
+
         }
     }
 
