@@ -19,20 +19,8 @@ public class UIHandler : MonoBehaviour {
     public GameObject pauseObject;
     public Text timer;
 
-    //music
-    private static AudioSource soundSource;
-    public static AudioClip mainBGM;
-    public static AudioClip intenseBGM;
-    private static bool keepFadingIn = false;
-    private static bool keepFadingOut = false;
-
-    //instance
-    public static UIHandler instance;
-
     void Awake() {
         Time.timeScale = 1;
-        soundSource.GetComponent<AudioSource>();
-        instance = this;
     }
 
     void Update() {
@@ -41,11 +29,10 @@ public class UIHandler : MonoBehaviour {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
         if (players.Length == 0) {
-
             Time.timeScale = 0;
             gameOver.SetActive(true);
         }
-
+        
         if (Input.GetButtonDown("Pause")) {
             PauseScene();
         }
@@ -60,12 +47,14 @@ public class UIHandler : MonoBehaviour {
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
             Time.timeScale = 0;
+        
             winObject.SetActive(true);
         }
 
         //make player sprite visible even if game is paused
         if(Time.timeScale == 0) {
             EnableSpriteRend(players);
+
         }
     }
 
@@ -109,37 +98,6 @@ public class UIHandler : MonoBehaviour {
         //enable SpriteRenderer component on players
         foreach (GameObject player in players) {
             player.GetComponent<SpriteRenderer>().enabled = true;
-        }
-    }
-
-    public static void FadeInCaller(AudioClip track, float fadeSpeed, float maxVolume) {
-        instance.StartCoroutine(FadeIn(track, fadeSpeed, maxVolume));
-    }
-
-    public static void FadeOutCaller(float fadeSpeed) {
-        instance.StartCoroutine(FadeOut(fadeSpeed));
-    }
-
-    static IEnumerator FadeIn(AudioClip track, float fadeSpeed, float maxVolume) {
-        keepFadingIn = true;
-        keepFadingOut = false;
-
-        soundSource.clip = track;
-        soundSource.Play();
-        soundSource.volume = 0;
-        while (keepFadingOut && soundSource.volume <= maxVolume) {
-            soundSource.volume += fadeSpeed;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    static IEnumerator FadeOut(float fadeSpeed) {
-        keepFadingIn = true;
-        keepFadingOut = false;
-
-        while(keepFadingOut && soundSource.volume >= 0) {
-            soundSource.volume -= fadeSpeed;
-            yield return new WaitForSeconds(0.1f);
         }
     }
 }
