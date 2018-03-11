@@ -107,6 +107,9 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Projectile") {
+            //start health regen when damage is first taken
+            lastHealTime = Time.time;
+
             startBlinking = true; //start blinking effect
             health -= 1; //decrement health
             spriteBlinkingTotalTimer = 0f; //reset blinking timer

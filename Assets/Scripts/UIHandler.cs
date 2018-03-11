@@ -152,6 +152,9 @@ public class UIHandler : MonoBehaviour {
 
         //delay spawners
         AddSecondsToSpawnerDelay();
+
+        //reset SoundHandler
+        SoundHandler.GetComponent<SoundHandler>().numPlayers = numPlayers;
     }
 
     private void EnableSpriteRend(GameObject[] players) {
