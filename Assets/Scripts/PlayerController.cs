@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour {
     private float defaultHealth;
     public float recoverHealthRate = 10f;
     private float lastHealTime = 0f;
+    private float collTimer = 0f;
+    private float damageStart = 0.4f;
+    private bool checkColl = true;
 
     //private component variables
     private Rigidbody2D rb2d;
@@ -75,19 +78,31 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D coll) {
-        if (Time.time - lastDamageTime >= damagePeriod && !attack && coll.gameObject.tag == "Enemy") {
-            //start health regen when damage is first taken
-            lastHealTime = Time.time;
-
-            startBlinking = true; //start blinking effect
-            health -= 1; //decrement health
-            spriteBlinkingTotalTimer = 0f; //reset blinking timer
-            lastDamageTime = Time.time;
+        if (coll.gameObject.tag == "Enemy" && checkColl) {
+            collTimer = Time.time;
         }
     }
 
     void OnCollisionStay2D(Collision2D coll) {
-        OnCollisionEnter2D(coll);
+        if (coll.gameObject.tag == "Enemy") {
+            checkColl = false;
+            if (Time.time - collTimer >= damageStart && Time.time - lastDamageTime >= damagePeriod && !attack) {
+                //start health regen when damage is first taken
+                lastHealTime = Time.time;
+
+                startBlinking = true; //start blinking effect
+                health -= 1; //decrement health
+                spriteBlinkingTotalTimer = 0f; //reset blinking timer
+                lastDamageTime = Time.time;
+                checkColl = true;
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D coll) {
+        if (coll.gameObject.tag == "Enemy") {
+            checkColl = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other) {

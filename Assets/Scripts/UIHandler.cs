@@ -138,6 +138,7 @@ public class UIHandler : MonoBehaviour {
     private void ResetPlayers() {
         foreach (GameObject player in players) {
             player.GetComponent<PlayerController>().health = 10;
+            player.GetComponent<PlayerController>().spriteBlinkingTotalTimer = 0f;
             player.SetActive(true);
         }
     }
