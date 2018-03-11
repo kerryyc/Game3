@@ -31,6 +31,9 @@ public class SoundHandler : MonoBehaviour {
         //if all players are dead, play game over
         if (!playOnce && players.Length == 0) {
             FadeOutCaller(0.01f);
+            // Jansen Yan: Not sure if intended, but added in the game over track code
+            soundSource.clip = gameOverTrack;
+            soundSource.Play();
             playOnce = true;
         }
 
@@ -41,7 +44,7 @@ public class SoundHandler : MonoBehaviour {
             soundSource.Play();
             playOnce = true;
         }
-        else if(!transitionTrack && (int)surviveTime == 20f) {
+        else if(!transitionTrack && (int)surviveTime == 60f) {
             float time = soundSource.time;
             soundSource.clip = intenseBGM;
             soundSource.time = time;

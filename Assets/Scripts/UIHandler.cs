@@ -10,7 +10,9 @@ public class UIHandler : MonoBehaviour {
     public bool isMenu = false;
     public int levelNum = 1;
     public string sceneName;
-    public float surviveTime = 60f;
+    public float surviveTime = 181f;
+    public float waveTimeInterval = 61f;
+    public float waveTime = 61f;
 
     //GameObjects
     public GameObject canvas;
@@ -41,9 +43,22 @@ public class UIHandler : MonoBehaviour {
         }
 
         //calculate survive time and update text
+        // Jansen Yan: (update the text with the wave timer interval)
+        waveTimeInterval -= Time.deltaTime;
         surviveTime -= Time.deltaTime;
-        timer.text = ((int)surviveTime).ToString();
 
+        // Jansen Yan: calculate the wave time interval and update the text
+        // timer.text = ((int)surviveTime).ToString();
+
+        timer.text = ((int)waveTimeInterval).ToString();
+
+        // Jansen Yan: every 60 seconds, change the time back to 0
+        if ((int)waveTimeInterval == 0)
+        {
+            // Jansen Yan: reset back to 60
+            waveTimeInterval = waveTime;
+            timer.text = ((int) waveTimeInterval).ToString();
+        }
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
             Time.timeScale = 0;
