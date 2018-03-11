@@ -13,6 +13,7 @@ public class UIHandler : MonoBehaviour {
     public float surviveTime = 181f;
     public float waveTimeInterval = 61f;
     public float waveTime = 61f;
+    private float waveNum = 1;
 
     //GameObjects
     public GameObject canvas;
@@ -20,17 +21,24 @@ public class UIHandler : MonoBehaviour {
     public GameObject winObject;
     public GameObject pauseObject;
     public Text timer;
+    public Text waveText;
+
+    private GameObject[] players;
 
     void Awake() {
         Time.timeScale = 1;
+        if (!isMenu) {
+            players = GameObject.FindGameObjectsWithTag("Player");
+            EnableWaveText();
+        }
     }
 
     void Update() {
         if (isMenu) return; //skip if menu script
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //get all players
+        GameObject[] checkPlayers = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
-        if (players.Length == 0) {
+        if (checkPlayers.Length == 0) {
             Time.timeScale = 0;
             gameOver.SetActive(true);
         }
@@ -42,22 +50,28 @@ public class UIHandler : MonoBehaviour {
             QuitGame();
         }
 
-        //calculate survive time and update text
-        // Jansen Yan: (update the text with the wave timer interval)
+        //update the text with the wave timer interval
         waveTimeInterval -= Time.deltaTime;
         surviveTime -= Time.deltaTime;
 
-        // Jansen Yan: calculate the wave time interval and update the text
-        // timer.text = ((int)surviveTime).ToString();
-
+        // calculate the wave time interval and update the text
         timer.text = ((int)waveTimeInterval).ToString();
 
-        // Jansen Yan: every 60 seconds, change the time back to 0
+       //very 60 seconds, change the time back to 0
         if ((int)waveTimeInterval == 0)
         {
-            // Jansen Yan: reset back to 60
+            //reset back to 60
             waveTimeInterval = waveTime;
             timer.text = ((int) waveTimeInterval).ToString();
+
+            //reset players and destroy all tombstones and enemies
+            ResetPlayers();
+            DestroyGameObjectsWithTag("Tombstone");
+            DestroyGameObjectsWithTag("Enemy");
+
+            //show players wave number
+            waveNum++;
+            EnableWaveText();
         }
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
@@ -68,7 +82,7 @@ public class UIHandler : MonoBehaviour {
 
         //make player sprite visible even if game is paused
         if(Time.timeScale == 0) {
-            EnableSpriteRend(players);
+            EnableSpriteRend(checkPlayers);
 
         }
     }
@@ -114,5 +128,30 @@ public class UIHandler : MonoBehaviour {
         foreach (GameObject player in players) {
             player.GetComponent<SpriteRenderer>().enabled = true;
         }
+    }
+
+    private void ResetPlayers() {
+        foreach (GameObject player in players) {
+            player.GetComponent<PlayerController>().health = 10;
+            player.SetActive(true);
+        }
+    }
+
+    private void DestroyGameObjectsWithTag(string tag) {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject obj in objects) {
+            Destroy(obj);
+        }
+    }
+
+    private void EnableWaveText() {
+        waveText.gameObject.SetActive(true);
+        waveText.text = "Wave " + waveNum;
+        StartCoroutine(RemoveAfterSeconds(3, waveText.gameObject));
+    }
+
+    IEnumerator RemoveAfterSeconds(int seconds, GameObject obj) {
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
     }
 }

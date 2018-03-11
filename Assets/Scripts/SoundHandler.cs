@@ -21,28 +21,25 @@ public class SoundHandler : MonoBehaviour {
     private bool playOnce = false;
     private bool transitionTrack = false;
 
-    private GameObject[] players;
     private int numPlayers;
-    private int alivePlayers;
 
     void Awake () {
         instance = this;
         soundSource = GetComponent<AudioSource>();
         FadeInCaller(mainBGM, 0.01f, 1f);
-        players = GameObject.FindGameObjectsWithTag("Player");
-        alivePlayers = numPlayers = players.Length;
+        numPlayers = GameObject.FindGameObjectsWithTag("Player").Length;
     }
 
     void Update() {
         GameObject[] checkPlayers = GameObject.FindGameObjectsWithTag("Player"); //get all players
 
-        if(checkPlayers.Length < alivePlayers) {
+        if(checkPlayers.Length < numPlayers) {
             soundSource.PlayOneShot(playerDeath);
-            --alivePlayers;
+            --numPlayers;
         }
 
         //if all players are dead, play game over
-        if (!playOnce && alivePlayers == 0) {
+        if (!playOnce && numPlayers == 0) {
             //FadeOutCaller(0.01f);
             // Jansen Yan: Not sure if intended, but added in the game over track code
             soundSource.clip = gameOverTrack;
