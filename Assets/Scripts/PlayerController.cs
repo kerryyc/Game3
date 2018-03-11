@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour {
 
     // Melee sound effect
     private AudioSource soundSource;
-    public AudioClip deathSoundEffect;
     public AudioClip meleeSoundEffect;
     private bool isDeathSoundPlayed = false;
 
@@ -60,22 +59,8 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         //when health reaches 0
         if (health <= 0) {
-            // play sound effect on death one time
-            if (!isDeathSoundPlayed)
-            {
-                Instantiate(tombstone, new Vector2(transform.position.x, transform.position.y), transform.rotation);
-
-                soundSource.PlayOneShot(deathSoundEffect);
-                isDeathSoundPlayed = true;
-
-                //disable colliders and UI
-                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-                GetComponent<Collider2D>().enabled = false;
-                spriteRend.enabled = false;
-                transform.GetChild(0).gameObject.SetActive(false);
-            }
-            //deactive player
-            Invoke("disablePlayer", .8f);
+            Instantiate(tombstone, new Vector2(transform.position.x, transform.position.y), transform.rotation);
+            this.gameObject.SetActive(false);
             return;
         }
 
