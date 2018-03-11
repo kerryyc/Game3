@@ -761,7 +761,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
@@ -1129,6 +1129,7 @@ RectTransform:
   - {fileID: 755892398}
   - {fileID: 1047137957}
   - {fileID: 798800849}
+  - {fileID: 804172180}
   - {fileID: 948680400}
   - {fileID: 1653876335}
   m_Father: {fileID: 0}
@@ -1879,6 +1880,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 798800848}
+--- !u!1 &804172179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 804172180}
+  - component: {fileID: 804172181}
+  - component: {fileID: 804172182}
+  m_Layer: 5
+  m_Name: AttemptText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &804172180
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 804172179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 344776165}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 895.32, y: -15.609985}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
+--- !u!222 &804172181
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 804172179}
+--- !u!114 &804172182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 804172179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Lives: _'
 --- !u!1 &849650933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,11 +1996,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surviveTime: 181
+  UIHandler: {fileID: 1234275915}
   mainBGM: {fileID: 8300000, guid: 5e883a5e4a88ace46a7d61cb37b2a503, type: 3}
   intenseBGM: {fileID: 8300000, guid: 397e4031d2685414587bf7a809fb1766, type: 3}
   gameOverTrack: {fileID: 8300000, guid: 60296a0c37c161548a64074b9dd58df3, type: 3}
   winTrack: {fileID: 8300000, guid: 8a7bab776f6f0a04fb9fddfe6523f046, type: 3}
   playerDeath: {fileID: 8300000, guid: 697cf7f9de4581240ab35dcef4e2db23, type: 3}
+  numPlayers: 0
 --- !u!82 &849650936
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2410,7 +2487,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 344776165}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2978,12 +3055,15 @@ MonoBehaviour:
   surviveTime: 181
   waveTimeInterval: 61
   waveTime: 61
+  attempts: 3
   canvas: {fileID: 344776161}
   gameOver: {fileID: 2020748166}
   winObject: {fileID: 755892397}
   pauseObject: {fileID: 1047137956}
   timer: {fileID: 798800850}
+  attemptText: {fileID: 804172182}
   waveText: {fileID: 948680402}
+  SoundHandler: {fileID: 849650933}
   EnemySpawners:
   - {fileID: 1541697471}
   - {fileID: 594211477}
@@ -3665,7 +3745,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 344776165}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1653876336
 MonoBehaviour:

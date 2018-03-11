@@ -7,6 +7,7 @@ public class SoundHandler : MonoBehaviour {
     //other variables
     public static SoundHandler instance;
     public float surviveTime = 61f;
+    public GameObject UIHandler;
 
     //sound variables
     private static AudioSource soundSource;
@@ -21,7 +22,7 @@ public class SoundHandler : MonoBehaviour {
     private bool playOnce = false;
     private bool transitionTrack = false;
 
-    private int numPlayers;
+    [HideInInspector] public int numPlayers;
 
     void Awake () {
         instance = this;
@@ -39,7 +40,7 @@ public class SoundHandler : MonoBehaviour {
         }
 
         //if all players are dead, play game over
-        if (!playOnce && numPlayers == 0) {
+        if (!playOnce && numPlayers == 0 && UIHandler.GetComponent<UIHandler>().attempts <= 0) {
             //FadeOutCaller(0.01f);
             soundSource.clip = gameOverTrack;
             soundSource.Play();

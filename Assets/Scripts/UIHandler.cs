@@ -14,6 +14,8 @@ public class UIHandler : MonoBehaviour {
     public float waveTimeInterval = 61f;
     public float waveTime = 61f;
     private float waveNum = 1;
+    public int attempts = 3;
+    private int numPlayers;
 
     //UI
     public GameObject canvas;
@@ -21,9 +23,11 @@ public class UIHandler : MonoBehaviour {
     public GameObject winObject;
     public GameObject pauseObject;
     public Text timer;
+    public Text attemptText;
     public Text waveText;
 
     //other GameObjects
+    public GameObject SoundHandler;
     public GameObject[] EnemySpawners;
     private GameObject[] players;
 
@@ -31,7 +35,9 @@ public class UIHandler : MonoBehaviour {
         Time.timeScale = 1;
         if (!isMenu) {
             players = GameObject.FindGameObjectsWithTag("Player");
-            EnableWaveText();
+            numPlayers = players.Length;
+            EnableWaveText("Wave 1");
+            attemptText.text = "Lives: " + attempts;
         }
     }
 
@@ -41,8 +47,8 @@ public class UIHandler : MonoBehaviour {
         GameObject[] checkPlayers = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
         if (checkPlayers.Length == 0) {
-            Time.timeScale = 0;
-            gameOver.SetActive(true);
+            attemptText.text = "Lives: 0";
+            checkGameOver();
         }
         
         if (Input.GetButtonDown("Pause")) {
@@ -62,26 +68,12 @@ public class UIHandler : MonoBehaviour {
        //very 60 seconds, change the time back to 0
         if ((int)waveTimeInterval == 0)
         {
-            //reset back to 60
-            waveTimeInterval = waveTime;
-            timer.text = ((int) waveTimeInterval).ToString();
-
-            //reset players and destroy all tombstones and enemies
-            ResetPlayers();
-            DestroyGameObjectsWithTag("Tombstone");
-            DestroyGameObjectsWithTag("Enemy");
-
-            //show players wave number
             waveNum++;
-            EnableWaveText();
-
-            //delay spawners
-            AddSecondsToSpawnerDelay();
+            resetField("Wave " + waveNum);
         }
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
             Time.timeScale = 0;
-        
             winObject.SetActive(true);
         }
 
@@ -128,6 +120,40 @@ public class UIHandler : MonoBehaviour {
         Time.timeScale = 1;
     }
 
+    private void checkGameOver() {
+        --attempts;
+        if (attempts <= 0) {
+            Time.timeScale = 0;
+            gameOver.SetActive(true);
+        }
+        else {
+            attemptText.text = "Lives: " + attempts;
+            surviveTime += waveTime;
+            if(attempts != 1)
+                resetField(attempts + " Lives Left");
+            else
+                resetField("Last Life");
+            SoundHandler.GetComponent<SoundHandler>().numPlayers = numPlayers;
+        }
+    }
+
+    private void resetField(string text) {
+        //reset back to 60
+        waveTimeInterval = waveTime;
+        timer.text = ((int)waveTimeInterval).ToString();
+
+        //reset players and destroy all tombstones and enemies
+        ResetPlayers();
+        DestroyGameObjectsWithTag("Tombstone");
+        DestroyGameObjectsWithTag("Enemy");
+
+        //show players wave number
+        EnableWaveText(text);
+
+        //delay spawners
+        AddSecondsToSpawnerDelay();
+    }
+
     private void EnableSpriteRend(GameObject[] players) {
         //enable SpriteRenderer component on players
         foreach (GameObject player in players) {
@@ -150,9 +176,9 @@ public class UIHandler : MonoBehaviour {
         }
     }
 
-    private void EnableWaveText() {
+    private void EnableWaveText(string text) {
         waveText.gameObject.SetActive(true);
-        waveText.text = "Wave " + waveNum;
+        waveText.text = text;
         StartCoroutine(RemoveAfterSeconds(3, waveText.gameObject));
     }
 
