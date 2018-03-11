@@ -33,7 +33,6 @@ public class EnemySpawn : MonoBehaviour {
             else if ((int) surviveTime <= 120)
             {
                 int randNum = Random.Range(1, 4);
-                Debug.Log(randNum);
                 // it is likely that 1/3 of the spawns will be seekers
                 if (randNum > 1)
                 {

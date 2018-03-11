@@ -43,7 +43,6 @@ public class UIHandler : MonoBehaviour {
 
     void Update() {
         if (isMenu) return; //skip if menu script
-
         GameObject[] checkPlayers = GameObject.FindGameObjectsWithTag("Player"); //get all players
         //if all players are dead
         if (checkPlayers.Length == 0) {
@@ -127,13 +126,16 @@ public class UIHandler : MonoBehaviour {
             gameOver.SetActive(true);
         }
         else {
+            surviveTime +=  waveTime - waveTimeInterval;
+            SoundHandler.GetComponent<SoundHandler>().numPlayers = numPlayers;
+            SoundHandler.GetComponent<SoundHandler>().surviveTime = surviveTime;
+            ResetSpawnerTime();
+
             attemptText.text = "Lives: " + attempts;
-            surviveTime += waveTime;
-            if(attempts != 1)
+            if (attempts != 1)
                 resetField(attempts + " Lives Left");
             else
                 resetField("Last Life");
-            SoundHandler.GetComponent<SoundHandler>().numPlayers = numPlayers;
         }
     }
 
@@ -165,6 +167,7 @@ public class UIHandler : MonoBehaviour {
     }
 
     private void ResetPlayers() {
+        EnableSpriteRend(players);
         foreach (GameObject player in players) {
             player.GetComponent<PlayerController>().health = 10;
             player.GetComponent<PlayerController>().spriteBlinkingTotalTimer = 0f;
@@ -194,6 +197,13 @@ public class UIHandler : MonoBehaviour {
     private void AddSecondsToSpawnerDelay() {
         foreach (GameObject spawner in EnemySpawners) {
             spawner.GetComponent<EnemySpawn>().timer = spawner.GetComponent<EnemySpawn>().delay;
+        }
+    }
+
+    private void ResetSpawnerTime() {
+        foreach(GameObject spawner in EnemySpawners) {
+            spawner.GetComponent<EnemySpawn>().surviveTime = surviveTime;
+            Debug.Log(spawner.GetComponent<EnemySpawn>().surviveTime);
         }
     }
 }
