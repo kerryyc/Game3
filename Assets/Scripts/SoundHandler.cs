@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SoundHandler : MonoBehaviour {
     //other variables
+    public bool isMenu = false;
     public static SoundHandler instance;
     public float surviveTime = 61f;
     public GameObject UIHandler;
@@ -16,6 +17,7 @@ public class SoundHandler : MonoBehaviour {
     public AudioClip gameOverTrack;
     public AudioClip winTrack;
     public AudioClip playerDeath;
+    public AudioClip menuTheme;
 
     private static bool keepFadingIn = false;
     private static bool keepFadingOut = false;
@@ -27,11 +29,18 @@ public class SoundHandler : MonoBehaviour {
     void Awake () {
         instance = this;
         soundSource = GetComponent<AudioSource>();
-        FadeInCaller(mainBGM, 0.01f, 1f);
-        numPlayers = GameObject.FindGameObjectsWithTag("Player").Length;
+        if (!isMenu) {
+            FadeInCaller(mainBGM, 0.01f, 1f);
+            numPlayers = GameObject.FindGameObjectsWithTag("Player").Length;
+        }
+        else {
+            soundSource.clip = menuTheme;
+            soundSource.Play();
+        }
     }
 
     void Update() {
+        if (isMenu) return;
         GameObject[] checkPlayers = GameObject.FindGameObjectsWithTag("Player"); //get all players
 
         if(checkPlayers.Length < numPlayers) {

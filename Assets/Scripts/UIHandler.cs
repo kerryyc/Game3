@@ -105,7 +105,10 @@ public class UIHandler : MonoBehaviour {
 
     public void LoadScene() {
         //loads a scene under scenename
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+
+        //disables current canvas
+        canvas.SetActive(false);
     }
 
     public void PauseScene() {
