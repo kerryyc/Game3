@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
     public float recoverHealthRate = 10f;
     private float lastHealTime = 0f;
     private float collTimer = 0f;
-    private float damageStart = 0.4f;
+    private float damageStart = 0.5f;
     private bool checkColl = true;
 
     //private component variables
@@ -101,7 +101,14 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D coll) {
         if (coll.gameObject.tag == "Enemy") {
-            checkColl = true;
+            //take damage if the player didn't attack enemy and left collision
+            if (!attack) {
+                collTimer = 0f; //allow player to take damage
+                OnCollisionStay2D(coll); //take damage
+            }
+            else {
+                checkColl = true;
+            }
         }
     }
 
