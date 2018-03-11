@@ -891,7 +891,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 0
   isPlayer2: 1
-  damagePeriod: 2.5
+  damagePeriod: 2
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   recoverHealthRate: 10
   spriteBlinkingTotalTimer: 0
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   attack: 0
   isPlayer1: 1
   isPlayer2: 0
-  damagePeriod: 2.5
+  damagePeriod: 2
   tombstone: {fileID: 1041774733769988, guid: 9df87fce9ec01514a9b3963f37dc1235, type: 2}
   recoverHealthRate: 10
   spriteBlinkingTotalTimer: 0

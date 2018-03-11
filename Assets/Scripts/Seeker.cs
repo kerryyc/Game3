@@ -31,6 +31,8 @@ public class Seeker : MonoBehaviour {
     private GameObject player;
     private GameObject[] allPlayers;
 
+    private bool retreat = false;
+
     //  death sound effect
     private AudioSource soundSource;
     public AudioClip enemyDeathSound;
@@ -80,6 +82,7 @@ public class Seeker : MonoBehaviour {
             // if the player's health is not 0
             if (alivePlayers != 0) {
                 if (player.GetComponent<PlayerController>().health != 0) {
+                    retreat = false;
                     // if the distance between the enemy and player is greater than stopping distance
                     if (currDistance > stoppingDistance) {
                         // move towards player
@@ -96,6 +99,7 @@ public class Seeker : MonoBehaviour {
                     else if (currDistance < retreatDistance) {
                         // the enemy reverses its direction and retreats
                         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -speed * retreatSpeed * Time.deltaTime);
+                        retreat = true;
                     }
 
                 }
@@ -212,7 +216,7 @@ public class Seeker : MonoBehaviour {
 
     private void shoot()
     {
-        if (coolDownTime <= 0)
+        if (!retreat && coolDownTime <= 0)
         {
             
             GameObject bullet = Instantiate(projectile, transform.position, transform.rotation);
