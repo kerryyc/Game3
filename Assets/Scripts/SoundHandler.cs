@@ -50,8 +50,9 @@ public class SoundHandler : MonoBehaviour {
 
         surviveTime -= Time.deltaTime;
         //if players won, play win
-        if (!playOnce && (int)surviveTime == 0) {
+        if (!playOnce && (int)surviveTime <= 0) {
             soundSource.clip = winTrack;
+            soundSource.time = 0;
             soundSource.Play();
             playOnce = true;
         }

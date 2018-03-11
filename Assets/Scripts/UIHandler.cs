@@ -64,16 +64,17 @@ public class UIHandler : MonoBehaviour {
         // calculate the wave time interval and update the text
         timer.text = ((int)waveTimeInterval).ToString();
 
-       //very 60 seconds, change the time back to 0
-        if ((int)waveTimeInterval == 0)
-        {
-            waveNum++;
-            resetField("Wave " + waveNum);
-        }
-        //if survive time is 0, players have won
-        if((int)surviveTime == 0) {
-            Time.timeScale = 0;
-            winObject.SetActive(true);
+        //very 60 seconds, change the time back to 0
+        if ((int)waveTimeInterval == 0) {
+            //if survive time is 0, players have won
+            if ((int)surviveTime == 0) {
+                Time.timeScale = 0;
+                winObject.SetActive(true);
+            }
+            else {
+                waveNum++;
+                resetField("Wave " + waveNum);
+            }
         }
 
         //make player sprite visible even if game is paused
@@ -148,6 +149,7 @@ public class UIHandler : MonoBehaviour {
         ResetPlayers();
         DestroyGameObjectsWithTag("Tombstone");
         DestroyGameObjectsWithTag("Enemy");
+        DestroyGameObjectsWithTag("Projectile");
 
         //show players wave number
         EnableWaveText(text);
