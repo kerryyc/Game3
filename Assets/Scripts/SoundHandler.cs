@@ -41,7 +41,6 @@ public class SoundHandler : MonoBehaviour {
         //if all players are dead, play game over
         if (!playOnce && numPlayers == 0) {
             //FadeOutCaller(0.01f);
-            // Jansen Yan: Not sure if intended, but added in the game over track code
             soundSource.clip = gameOverTrack;
             soundSource.Play();
             soundSource.PlayOneShot(playerDeath);

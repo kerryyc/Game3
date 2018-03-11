@@ -15,7 +15,7 @@ public class UIHandler : MonoBehaviour {
     public float waveTime = 61f;
     private float waveNum = 1;
 
-    //GameObjects
+    //UI
     public GameObject canvas;
     public GameObject gameOver;
     public GameObject winObject;
@@ -23,6 +23,8 @@ public class UIHandler : MonoBehaviour {
     public Text timer;
     public Text waveText;
 
+    //other GameObjects
+    public GameObject[] EnemySpawners;
     private GameObject[] players;
 
     void Awake() {
@@ -72,6 +74,9 @@ public class UIHandler : MonoBehaviour {
             //show players wave number
             waveNum++;
             EnableWaveText();
+
+            //delay spawners
+            AddSecondsToSpawnerDelay();
         }
         //if survive time is 0, players have won
         if((int)surviveTime == 0) {
@@ -153,5 +158,11 @@ public class UIHandler : MonoBehaviour {
     IEnumerator RemoveAfterSeconds(int seconds, GameObject obj) {
         yield return new WaitForSeconds(seconds);
         obj.SetActive(false);
+    }
+
+    private void AddSecondsToSpawnerDelay() {
+        foreach (GameObject spawner in EnemySpawners) {
+            spawner.GetComponent<EnemySpawn>().timer = spawner.GetComponent<EnemySpawn>().delay;
+        }
     }
 }

@@ -6,9 +6,8 @@ public class EnemySpawn : MonoBehaviour {
     public GameObject enemy;
     public GameObject seeker;
     public float delay;
-    public float surviveTime = 181f;
-    
-    float timer;
+    public float surviveTime = 181f; 
+    public float timer;
     
     void Start()
     {

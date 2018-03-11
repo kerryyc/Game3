@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour {
     // Melee sound effect
     private AudioSource soundSource;
     public AudioClip meleeSoundEffect;
-    private bool isDeathSoundPlayed = false;
 
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
