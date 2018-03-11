@@ -162,11 +162,11 @@ public class Seeker : MonoBehaviour {
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 100f);
             }
             else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 100f);
             }
         }
 
