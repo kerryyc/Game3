@@ -94,11 +94,11 @@ public class Enemy : MonoBehaviour {
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
             {
-                performKnockback(other, 100f);
+                performKnockback(other, 250f);
             }
             else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
             {
-                performKnockback(other, 100f);
+                performKnockback(other, 250f);
             }
         }
 
@@ -120,11 +120,11 @@ public class Enemy : MonoBehaviour {
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 250f);
             }
             else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 250f);
             }
         }
     }

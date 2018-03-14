@@ -78,10 +78,9 @@ public class Seeker : MonoBehaviour {
             allPlayers = GameObject.FindGameObjectsWithTag("Player");
             int alivePlayers = allPlayers.Length;
 
-            // Debug.Log(currDistance);
             // if the player's health is not 0
             if (alivePlayers != 0) {
-                if (player.GetComponent<PlayerController>().health != 0) {
+                if (player.GetComponent<PlayerController>().health > 0) {
                     retreat = false;
                     // if the distance between the enemy and player is greater than stopping distance
                     if (currDistance > stoppingDistance) {
@@ -108,6 +107,7 @@ public class Seeker : MonoBehaviour {
                 // find another player that has the lowest hp 
                 // and follow them instead
                 else {
+                    Debug.Log("Seeker killed player!");
                     // update the array of players
                     allPlayers = GameObject.FindGameObjectsWithTag("Player");
                     int index = findMinIndex();
@@ -140,11 +140,11 @@ public class Seeker : MonoBehaviour {
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 250f);
             }
             else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
             {
-                performKnockback(other, 50f);
+                performKnockback(other, 250f);
             }
         }
         if (!passedBoundary && other.gameObject.tag == "PlayerBoundary")
@@ -166,11 +166,11 @@ public class Seeker : MonoBehaviour {
         {
             if (other.gameObject.GetComponent<Enemy>() != null && other.gameObject.GetComponent<Enemy>().doKnockback)
             {
-                performKnockback(other, 100f);
+                performKnockback(other, 250f);
             }
             else if (other.gameObject.GetComponent<Seeker>() != null && other.gameObject.GetComponent<Seeker>().doKnockback)
             {
-                performKnockback(other, 100f);
+                performKnockback(other, 250f);
             }
         }
 
