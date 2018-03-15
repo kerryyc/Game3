@@ -37,7 +37,7 @@ public class UIHandler : MonoBehaviour {
         if (!isMenu) {
             players = GameObject.FindGameObjectsWithTag("Player");
             numPlayers = players.Length;
-            EnableWaveText("Wave 1");
+            EnableWaveText("Wave 1", true);
             attemptText.text = "Lives: " + attempts;
         }
     }
@@ -75,7 +75,7 @@ public class UIHandler : MonoBehaviour {
             }
             else {
                 waveNum++;
-                resetField("Wave " + waveNum);
+                resetField("Wave " + waveNum, true);
             }
         }
 
@@ -139,13 +139,13 @@ public class UIHandler : MonoBehaviour {
 
             attemptText.text = "Lives: " + attempts;
             if (attempts != 1)
-                resetField(attempts + " Lives Left");
+                resetField(attempts + " Lives Left", false);
             else
-                resetField("Last Life");
+                resetField("Last Life", false);
         }
     }
 
-    private void resetField(string text) {
+    private void resetField(string text, bool changePause) {
         //reset back to 60
         waveTimeInterval = waveTime;
         timer.text = ((int)waveTimeInterval).ToString();
@@ -156,8 +156,8 @@ public class UIHandler : MonoBehaviour {
         DestroyGameObjectsWithTag("Enemy");
         DestroyGameObjectsWithTag("Projectile");
 
-        //show players wave number
-        EnableWaveText(text);
+        //show players number of lives left
+        EnableWaveText(text, changePause);
 
         //delay spawners
         AddSecondsToSpawnerDelay();
@@ -190,10 +190,10 @@ public class UIHandler : MonoBehaviour {
         }
     }
 
-    private void EnableWaveText(string text) {
+    private void EnableWaveText(string text, bool changePause) {
         waveText.gameObject.SetActive(true);
         waveText.text = text;
-        pauseWaveText.text = text;
+        if(changePause) pauseWaveText.text = text;
         StartCoroutine(RemoveAfterSeconds(3, waveText.gameObject));
     }
 
