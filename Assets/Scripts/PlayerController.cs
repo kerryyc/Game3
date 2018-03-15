@@ -99,18 +99,18 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void OnCollisionExit2D(Collision2D coll) {
-        if (coll.gameObject.tag == "Enemy") {
-            //take damage if the player didn't attack enemy and left collision
-            if (!attack) {
-                collTimer = 0f; //allow player to take damage
-                OnCollisionStay2D(coll); //take damage
-            }
-            else {
-                checkColl = true;
-            }
-        }
-    }
+    //void OnCollisionExit2D(Collision2D coll) {
+    //    if (coll.gameObject.tag == "Enemy") {
+    //        //take damage if the player didn't attack enemy and left collision
+    //        if (!attack) {
+    //            collTimer = 0f; //allow player to take damage
+    //            OnCollisionStay2D(coll); //take damage
+    //        }
+    //        else {
+    //            checkColl = true;
+    //        }
+    //    }
+    //}
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Projectile") {
