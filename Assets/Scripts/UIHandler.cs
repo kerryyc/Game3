@@ -25,6 +25,7 @@ public class UIHandler : MonoBehaviour {
     public Text timer;
     public Text attemptText;
     public Text waveText;
+    public Text pauseWaveText;
 
     //other GameObjects
     public GameObject SoundHandler;
@@ -51,6 +52,7 @@ public class UIHandler : MonoBehaviour {
         }
         
         if (Input.GetButtonDown("Pause")) {
+            waveText.gameObject.SetActive(false);
             PauseScene();
         }
         if (Input.GetButtonDown("Quit")) {
@@ -191,6 +193,7 @@ public class UIHandler : MonoBehaviour {
     private void EnableWaveText(string text) {
         waveText.gameObject.SetActive(true);
         waveText.text = text;
+        pauseWaveText.text = text;
         StartCoroutine(RemoveAfterSeconds(3, waveText.gameObject));
     }
 
