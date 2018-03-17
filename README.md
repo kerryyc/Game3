@@ -1,3 +1,5 @@
+Final build of the game can be found in Assets/Build
+
 A medieval-themed local co-op 2D top-down survival game where two players are knights fighting against 
 waves of undead. Players must come up with different strategies to survive such as fleeing for their 
 lives or mashing the melee attack button to destroy zombies. There are three waves of enemies: the first contain the 
@@ -19,4 +21,5 @@ Any resources used (sprites, sound effects, etc.) were found through Google and 
 
 Music:
 Final Fantasy VII: Win and Loss Themes
+
 Fire Emblem Fates: Abundant Solace, No Justice, and No Justice(Fire)
